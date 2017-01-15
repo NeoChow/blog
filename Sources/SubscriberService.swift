@@ -69,14 +69,15 @@ struct SubscriberService {
     }
 
     mutating func notify(for post: Post, atDomain domain: String) throws {
-        let html = try "Views/post-notification-email.html"
-            .map(FileContents())
-            .map(Template(build: { builder in
-                post.buildReference(to: builder)
-                builder["domain"] = domain
-            }))
-            .string()
         for subscriber in try self.loadAllSubscribers() {
+            let html = try "Views/post-notification-email.html"
+                .map(FileContents())
+                .map(Template(build: { builder in
+                    post.buildReference(to: builder)
+                    builder["domain"] = domain
+                    builder["unsubscribeToken"] = subscriber.unsubscribeToken
+                }))
+                .string()
             let email = Email(
                 to: subscriber.email,
                 subject: "New Post",
