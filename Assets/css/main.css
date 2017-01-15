@@ -17,7 +17,7 @@ body, html {
 #top-bar {
   height:43px;
   width:100%;
-  background:url('http://localhost:8080/assets/img/top-bar-background.jpg');
+  background:url('/assets/img/top-bar-background.jpg');
   background-size:1px 43px;
   background-repeat:horizontal;
   text-align:left;
@@ -26,7 +26,7 @@ body, html {
 #top-bar a {
   width:447px;
   height:43px;
-  background:url('http://localhost:8080/assets/img/top-bar-icon.jpg');
+  background:url('/assets/img/top-bar-icon.jpg');
   background-size:447px 43px;
   display:block;
 }
@@ -62,6 +62,7 @@ a {
 #footer a {
   color:inherit;
   padding:10px;
+  padding-bottom:20px;
   text-decoration:none;
 }
 
