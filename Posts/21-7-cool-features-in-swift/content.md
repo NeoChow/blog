@@ -3,7 +3,7 @@ I have been spending a lot of time with Swift since it was announced at WWDC. It
 My strongest comparisons will be to Objective-C since that is the language it will be replacing or at least accompanying. Therefore, I am not necessarily saying similar features don’t exist in other languages, many of them do; I am simply concentrating on how Swift will change the daily lives of iOS and OSX programmers.
 
 1. <a name="extend-structs-and-literals" href="#extend-structs-and-literals">Extend Structs and Literals</a>
-=====================
+----------------
 
 I love that you can extend structs in Swift. It can be really useful to add functionality to an existing structure. One prime example for me is the ability to add a `center` method to a `CGRect` that will return the center point of the rectangle:
 
@@ -41,7 +41,7 @@ You can then use it like so:
 **Note**: The parenthesis can be left out if the only parameter is a closure
 
 2. <a name="enumeration-cases-can-hold-values" href="#enumeration-cases-can-hold-values">Enumeration Cases Can Hold Values</a>
-==========================
+----------------
 
 In Swift, the cases of an enumeration can hold values known as [Associated Values](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-XID_189) which creates an elegant way to solve certain types of problems. A simple example of this is a network request:
 
@@ -72,7 +72,7 @@ Possibly the best example of this is the `Optional` in Swift. The Swift compiler
 In the `None` case (`nil`), there is no actual value associated with it, but in the `Some` case, there is a concrete value associated with it. This is a really elegant way to express a variable that can lack a value without having pointers exposed in the language and without allowing all values to be nil.
 
 3. <a name="keeps-your-collections-safe-and-clear" href="#keeps-your-collections-safe-and-clear">Keeps Your Collections Safe and Clear</a>
-==========================
+----------------
 
 Collections in Objective-C all use the most generic class type available, `id`. This means that you can put any value into a collection including a mix of objects and often times, this leaves the types of a collection unclear. This is something I have always thought that C++ had over Objective-C. C++ has [Templates](http://en.wikipedia.org/wiki/Template_(C%2B%2B)) that allow you to define a collection with a specific type like `vector<int>`. Swift borrows very similar syntax and functionality with their [Generics](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-XID_234) feature.
 
@@ -104,7 +104,7 @@ If another programmer saw a variable called `sentence` defined as an array, I th
 This feature will make Swift APIs including collections much more easily understood and safer to operate with.
 
 4. <a name="multiple-functions-with-different-types" href="#multiple-functions-with-different-types">Multiple Functions with Different Types</a>
-==============================
+----------------
 
 In Swift, you can define multiple versions of a function, with different implementations, with the same name as long as they take different types. This is great for defining functions that could apply to many different types but require different implementations for each. An example would be functions to add two values mathematically:
 
@@ -127,7 +127,7 @@ There is no reason to define two different functions like `mathmaticallyAddInts`
 I do not inherently dislike verbosity in a programming language, but I certainly don’t want to be forced to make something overly verbose. The goal is to make the intention clear with as few characters as possible.
 
 5. <a name="willset-didset" href="#willset-didset">WillSet and DidSet, No Need to Completely Override Setters</a>
-==============================================
+----------------
 
 In Objective-C there were a lot of circumstances where I would override a property’s setter so that I could perform an action before or after setting the value. This always required boilerplate code to do the actual value assigning on top of whatever action I actually wanted to perform that was especially cumbersome if I wanted the property to be atomic.
 
@@ -152,7 +152,7 @@ In Swift, there is a built in mechanism to make performing actions immediately a
 In this `MyView` class, whenever it is assigned a new `aSubview`, the old one is automatically removed and the new one is added as a subview. I do this when I will be changing out a subview often and from multiple places so I don’t always have to track when the view is attached or not and I don’t have to duplicated the `addSubview` code.
 
 6. <a name="weak-and-unowned-in-closures" href="#weak-and-unowned-in-closures">Weak and Unowned In Closures</a>
-=========================
+----------------
 
 Memory management is still not completely automatic in Swift as it still uses [Automatic Reference Counting](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html), but they greatly improved the syntax. Instead of having to declare a `weak` or `unsafe_unretained` variable outside of the block, you can define how a closure should capture outside variables using [Capture Lists](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_67). Here is an example for both `weak` and `unowned` in Swift:
 
@@ -205,7 +205,7 @@ I also created a `FilePickerController` class that theoretically allows the user
 This is much cleaner than what used to be necessary in Objective-C.
 
 7. <a name="initialization-safety" href="#initialization-safety">Initialization Safety</a>
-==============
+----------------
 
 In Objective-C there was a bug that I would fairly often write. It would never make it to production, but it would cause me to scratch my head and spend a few minutes debugging it. It is a pretty common pattern that I have a mutable array in a class that I want to load contents into. This requires that the array first be initialized so that it can be added to. I would often forget to put this initialization into my class and it would continue on happily sending messages to the nil array, not actually adding anything to it.
 
