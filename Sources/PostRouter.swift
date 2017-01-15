@@ -98,6 +98,7 @@ class PublishedPostRouter: PostRouter, ParameterizedRouter {
             let month = param.0.0.1 < 10 ? "0\(param.0.0.1)" : "\(param.0.0.1)"
             let day = param.0.1 < 10 ? "0\(param.0.1)" : "\(param.0.1)"
             let relativePath = "\(param.0.0.0)/\(month)/\(day)/\(param.1)"
+            print(relativePath)
             return try self.imageResponse(to: request, forPostAtRelativePath: relativePath)
         }),
     ]}
