@@ -1,0 +1,279 @@
+//
+//  File.swift
+//  drewag.me
+//
+//  Created by Andrew J Wagner on 12/25/16.
+//
+//
+
+import Foundation
+import TextTransformers
+
+class StaticPagesGenerator {
+    var postsService = PostsService()
+    let fileManager = FileManager.default
+
+    func generateReturningNewPosts() throws -> [Post] {
+        self.removeDirectory(at: "Generated-working")
+        self.createDirectory(at: "Generated-working")
+        try self.generateIndex()
+        try self.generatePosts()
+        try self.generateArchive()
+        try self.generateSitemap()
+        try self.generateAtomFeed()
+
+        let newPosts = try self.checkForNewPosts()
+
+        print("Replacing production version...", terminator: "")
+        self.removeDirectory(at: "Generated")
+        try self.moveItem(from: "Generated-working", to: "Generated")
+        print("done")
+
+        return newPosts
+    }
+}
+
+private extension StaticPagesGenerator {
+    func removeDirectory(at path: String) {
+        do { try self.fileManager.removeItem(atPath: path) } catch {}
+    }
+
+    func createDirectory(at path: String) {
+        do { try self.fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil) } catch {}
+    }
+
+    func write(_ html: String, to path: String) throws {
+        try html.write(toFile: path, atomically: true, encoding: .utf8)
+    }
+
+    func moveItem(from: String, to: String) throws {
+        try self.fileManager.moveItem(atPath: from, toPath: to)
+    }
+
+    func copyFile(from: String, to: String) throws {
+        try self.fileManager.copyItem(atPath: from, toPath: to)
+    }
+
+    func generateIndex() throws {
+        print("Generating index...", terminator: "")
+        let (featured, recent) = try self.postsService.loadMainPosts()
+        let html = try "Views/home.html"
+            .map(FileContents())
+            .map(Template(build: { builder in
+                func buildPost(post: Post, builder: TemplateBuilder) {
+                    post.buildReference(to: builder)
+                }
+
+                builder.buildValues(forKey: "featured", withArray: featured, build: buildPost)
+                builder.buildValues(forKey: "recent", withArray: recent, build: buildPost)
+            }))
+            .string()
+
+        try self.write(html, to: "Generated-working/home.html")
+        print("done")
+    }
+
+    func generatePosts() throws {
+        for post in try self.postsService.loadAllPosts() {
+            try self.generate(post: post)
+        }
+    }
+
+    func generate(post: Post) throws {
+        print("Generating \(post.metaInfo.title)...", terminator: "")
+
+        let relativePath = post.permanentRelativePath
+
+        let html = try "Views/post.html"
+            .map(FileContents())
+            .map(Template(build: { builder in
+                post.buildContent(to: builder, atUrl: URL(fileURLWithPath: relativePath))
+            }))
+            .string()
+
+        let directory = "Generated-working\(relativePath)"
+
+        self.createDirectory(at: directory)
+
+        let htmlPath = directory + "/content.html"
+        try self.write(html, to: htmlPath)
+
+        let imagePath = directory + "/photo.jpg"
+        try copyFile(from: post.imageUrl.relativePath, to: imagePath)
+
+        let metaPath = directory + "/meta.json"
+        try copyFile(from: post.metaUrl.relativePath, to: metaPath)
+
+        print("done")
+    }
+
+    func generateArchive() throws {
+        print("Generating archive...")
+
+        let organized = try self.postsService.loadOrganizedPosts()
+        for (year, yearDict) in organized.keysAndValues {
+            for (month, monthDict) in yearDict.keysAndValues {
+                for (day, dayArray) in monthDict.keysAndValues {
+                    try self.generateArchive(forDay: day, month: month, year: year, with: dayArray)
+                }
+                try self.generateArchive(forMonth: month, year: year, with: monthDict)
+            }
+            try self.generateAchive(forYear: year, with: yearDict)
+        }
+        try self.generateArchive(with: organized)
+
+        print("done")
+    }
+
+    func generateSitemap() throws {
+        print("Generating sitemap...", terminator: "")
+
+        let posts = try self.postsService.loadAllPosts()
+        let xml = try "Views/sitemap.xml"
+            .map(FileContents())
+            .map(Template(build: { builder in
+                builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
+                    builder["link"] = post.permanentRelativePath
+                    builder["modified"] = post.metaInfo.modified.railsDate
+                })
+            }))
+            .string()
+
+        try self.write(xml, to: "Generated-working/sitemap.xml")
+
+        print("done")
+    }
+
+    func generateAtomFeed() throws {
+        print("Generating atom feed...", terminator: "")
+
+        let posts = try self.postsService.loadAllPosts()
+        let xml = try "Views/feed.xml"
+            .map(FileContents())
+            .map(Template(build: { builder in
+                func buildPost(post: Post, builder: TemplateBuilder) {
+                    post.buildReference(to: builder)
+                }
+
+                builder["mostRecentUpdated"] = posts.first?.metaInfo.modified.railsDateTime
+                builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
+                    builder["title"] = post.metaInfo.title
+                    builder["permaLink"] = post.permanentRelativePath
+                    builder["modified"] = post.metaInfo.modified.iso8601DateTime
+                    builder["description"] = post.metaInfo.summary
+                    builder["publishedYear"] = post.metaInfo.published.year
+                    builder["modified"] = post.metaInfo.modified.railsDate
+                    builder["content"] = post.html
+                })
+            }))
+            .string()
+
+        try self.write(xml, to: "Generated-working/feed.xml")
+
+        print("done")
+    }
+
+    func build(day: String, month: String, year: String, posts: [Post]) -> (_ builder: TemplateBuilder) -> () {
+        return { builder in
+            func buildPost(post: Post, builder: TemplateBuilder) {
+                builder["dayLink"] = "/posts/\(year)/\(month)/\(day)"
+                post.buildReference(to: builder)
+            }
+
+            builder["day"] = posts.first?.metaInfo.published.date
+            builder["dayLink"] = "/posts/\(year)/\(month)/\(day)"
+            builder.buildValues(forKey: "posts", withArray: posts, build: buildPost)
+        }
+    }
+
+    func build(month: String, year: String, posts: PostsService.MonthDict) -> (_ builder: TemplateBuilder) -> () {
+        return { builder in
+            builder["month"] = posts.values.first?.first?.metaInfo.published.month
+            builder["monthLink"] = "/posts/\(year)/\(month)"
+            builder.buildValues(forKey: "posts", withArray: posts.keysAndValues, build: { (params, builder) in
+                self.build(day: params.0, month: month, year: year, posts: params.1)(builder)
+            })
+        }
+    }
+
+    func build(year: String, posts: PostsService.YearDict) -> (_ builder: TemplateBuilder) -> () {
+        return { builder in
+            builder["year"] = year
+            builder["yearLink"] = "/posts/\(year)"
+            builder.buildValues(forKey: "posts", withArray: posts.keysAndValues, build: { (params, builder) in
+                self.build(month: params.0, year: year, posts: params.1)(builder)
+            })
+        }
+    }
+
+    func build(posts: PostsService.AllDict) -> (_ builder: TemplateBuilder) -> () {
+        return { builder in
+            builder.buildValues(forKey: "posts", withArray: posts.keysAndValues, build: { (params, builder) in
+                self.build(year: params.0, posts: params.1)(builder)
+            })
+        }
+    }
+
+    func generateArchive(forDay day: String, month: String, year: String, with array: [Post]) throws {
+        print("Generating achive for \(year)/\(month)/\(day)...", terminator: "")
+
+        let html = try "Views/day-archive.html"
+            .map(FileContents())
+            .map(Template(build: self.build(day: day, month: month, year: year, posts: array)))
+            .string()
+        try self.write(html, to: "Generated-working/posts/\(year)/\(month)/\(day)/archive.html")
+
+        print("done")
+    }
+
+    func generateArchive(forMonth month: String, year: String, with dict: PostsService.MonthDict) throws {
+        print("Generating achive for \(year)/\(month)...", terminator: "")
+
+        let html = try "Views/month-archive.html"
+            .map(FileContents())
+            .map(Template(build: self.build(month: month, year: year, posts: dict)))
+            .string()
+        try self.write(html, to: "Generated-working/posts/\(year)/\(month)/archive.html")
+
+        print("done")
+    }
+
+    func generateAchive(forYear year: String, with dict: PostsService.YearDict) throws {
+        print("Generating achive for \(year)...", terminator: "")
+
+        let html = try "Views/year-archive.html"
+            .map(FileContents())
+            .map(Template(build: self.build(year: year, posts: dict)))
+            .string()
+        try self.write(html, to: "Generated-working/posts/\(year)/archive.html")
+
+        print("done")
+    }
+
+    func generateArchive(with dict: PostsService.AllDict) throws {
+        print("Generating achive for all...", terminator: "")
+
+        let html = try "Views/archive.html"
+            .map(FileContents())
+            .map(Template(build: self.build(posts: dict)))
+            .string()
+        try self.write(html, to: "Generated-working/posts/archive.html")
+
+        print("done")
+    }
+
+    func checkForNewPosts() throws -> [Post] {
+        var newPosts = [Post]()
+        print("Checking for new posts...", terminator: "")
+
+        for post in try self.postsService.loadAllPosts() {
+            let directory = "Generated\(post.permanentRelativePath)"
+            if !FileManager.default.fileExists(atPath: directory) {
+                newPosts.append(post)
+            }
+        }
+
+        print("done")
+        return newPosts
+    }
+}

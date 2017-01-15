@@ -1,0 +1,40 @@
+<h1>About this Blog</h1>
+<p>
+  My name is Andrew Wagner and I am a software developer focussed on <strong>iOS and web development</strong>. I have
+  a passion for <strong>product and user experience development</strong>. I don't care what technologies or skills I
+  have to learn as long as they allow me to shape the products I develop to provide the best
+  experience possible for its users.
+</p>
+<p>
+  My main skills are in programming and user experience, but I have dabbled in graphic design, product
+  design, marketing, business development, and everything else involved in turning an idea into a
+  marketable reality.
+</p>
+<p>
+  On this blog I write about the practical things that I come across while working as a <strong>freelance
+    developer and building my own app business</strong>.
+</p>
+<p>For more information you can visit my <a href="/about-me">about me</a> page.</p>
+
+<h1>Featured Posts</h1>
+{{ repeat featured }}
+<div class="post">
+  <a href="{{link}}"><img src="{{imageLink}}" /></a>
+  <div id="description">
+    <h2><a href="{{link}}">{{title}}</a></h2>
+    <p class="published"><time>{{published}}</time></p>
+    <p>{{summary}}</p>
+  </div>
+</div>
+{{ end }}
+
+<h1>Recent Posts</h1>
+{{ repeat recent }}
+<div class="post">
+  <h3><a href="{{link}}">{{title}}</a></h3>
+  <p class="published"><time>{{published}}</time></p>
+  <p>{{summary}}</p>
+</div>
+{{ end }}
+
+<h3><a href="/posts">All Posts</a></h3>

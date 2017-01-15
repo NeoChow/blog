@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://drewag.me/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>http://drewag.me/about-me</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>http://drewag.me/privacy-policy</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.1</priority>
+    </url>
+    <url>
+        <loc>http://drewag.me/posts</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>http://drewag.me/subscribers/new</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    {{repeat posts}}
+    <url>
+        <loc>http://drewag.me{{link}}</loc>
+        <lastmod>{{modified}}</lastmod>
+        <changefreq>never</changefreq>
+        <priority>0.5</priority>
+    </url>
+    {{end}}
+</urlset> 

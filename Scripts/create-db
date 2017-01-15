@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ "$#" -ne 0 ]; then
+  echo "Usage: $0"
+  exit 1
+fi
+
+DB=blog
+psql -c "DROP DATABASE IF EXISTS ${DB};"
+psql -c "CREATE DATABASE ${DB};"
+
+psql -d ${DB} -c "CREATE TABLE subscribers ( \
+    email				varchar(100) UNIQUE NOT NULL \
+    , unsubscribe_token	varchar(16) UNIQUE NOT NULL \
+    , subscribed_date	date NOT NULL \
+    );"
+
+psql -d ${DB} -c "CREATE TABLE visits ( \
+    ip	        inet NOT NULL \
+    , route	    varchar(255) NOT NULL \
+    , method    varchar(8) NOT NULL \
+    , time	    timestamp NOT NULL \
+    , source    varchar(100) \
+    , referer   varchar(255) \
+    );"
+
+psql -d ${DB} -c "GRANT SELECT, USAGE ON ALL SEQUENCES IN SCHEMA public TO blog_service;"
+psql -d ${DB} -c "GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO blog_service;"

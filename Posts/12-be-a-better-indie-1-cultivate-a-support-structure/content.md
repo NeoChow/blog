@@ -1,0 +1,16 @@
+<div class="note">This is the first in a series <a href="/posts/2014/01/19/10-ways-to-be-a-better-independent-developer">10 Ways to Be a Better Independent Developer</a>.</div>
+
+Of all my advice, cultivating and maintaining a support structure for yourself is by far the most important. You need a support structure both on a professional and personal level.
+
+On a professional level, I was incredibly lucky to get an amazing first client. They have been fantastically supportive of my freelance work. They are a freelance company themselves so they are in many ways finding clients for me. They are constantly approaching me about more work for different clients while always being considerate about what I might not be able to handle at one time. We also have great conversations about my own app development and have formed a personal connection.
+
+A big reason that this kind of relationship was possible is because I approached them in a very genuine way. I didn’t give them a marketing pitch when I went to talk to them for the first time. I shared my personal goals and motivations. I went as far as to tell them that I was not in it for the money; that I want to create a lifestyle for myself where I can be happy and always enjoy what I do. This may have hurt my chance to negotiate a higher hourly rate, but it allowed me to create a real connection with them because those thoughts resonated with them. I also said I have no intention to work crazy hours. I would rather spend fewer hours but work passionately and much more effectively. That coutner balances my ability to charge an hourly rate, because I can do a lot more during those hours than I would be if I were working 60 or 80 hour weeks.
+
+That original conversation with them was very real and genuine. It didn’t feel like an interview, it was a conversation amongst people with similar interests and goals. It is how we have maintained such a mutually beneficial and supportive relationship. I will work hard to meet their deadlines while maintaining my strict quality standards. I will do work for them whenever possible, but I will never over commit and I can feel good about it because we are both on the same page.
+
+On a personal level, my friends and family have been incredibly supportive of my decision to go independent. They have been there for me to vent about my stresses and offer me encouragement and confidence.  No matter how successful I am, I will always have doubts. When I hit those moments where I think I might not be able to make it, they are there to put things in perspective.
+
+
+Beyond emotional support, my friends and family connect me with other people whom might have work for me. So far, I have not had to spend any time searching for clients since my very first one. They have all come from my support structure.
+
+I often have [impostor syndrome](http://en.wikipedia.org/wiki/Impostor_syndrome) where I wonder if I am worth what I am charging and I wonder if I have the skills necessary to run a business. I would not be able to survive as an independent developer without the reassuring talks with my friends and family or without the reinforcement from my clients that what I am doing is valuable to them and therefore, worthwhile and fulling for me. That balance of doubt and encouragement is the best recipe for success.

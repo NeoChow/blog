@@ -1,0 +1,33 @@
+.message {
+    background-color:#48a21d;
+}
+
+.error {
+    background-color:#d72626;
+}
+
+.message, .error {
+    color:white;
+    padding:.5em;
+    border-radius:5px;
+}
+
+#content form {
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+
+#content form p {
+    text-align:left;
+}
+
+#content form input {
+    display:inline;
+}
+
+#content form input[type="submit"] {
+    font-size:12pt;
+    width:auto;
+}

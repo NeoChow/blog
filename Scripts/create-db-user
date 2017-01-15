@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <db_password>"
+  exit 1
+fi
+
+DB=blog
+psql -d ${DB} -c "CREATE ROLE blog_service WITH LOGIN PASSWORD '$password';"

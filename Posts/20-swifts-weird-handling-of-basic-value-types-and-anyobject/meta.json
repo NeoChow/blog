@@ -1,0 +1,7 @@
+{
+    "title": "Swift’s Weird Handling of Basic Value Types and AnyObject",
+    "summary": "Basic value types like String and Int can be secretly converted to Objective-C types like NSString and NSNumber. This has some interesting effects and implications.",
+    "published": "2014-06-22",
+    "author": "Andrew Wagner",
+    "featured": false
+}

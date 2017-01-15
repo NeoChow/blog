@@ -1,0 +1,7 @@
+{
+    "title": "Bind a UITableView to a Property",
+    "summary": "A library to allow binding a UITableView directly to a to-many property. The library automatically handles insertions and deletions as long as you make sure the to-many property emits KVO notifications.",
+    "published": "2013-02-10",
+    "author": "Andrew Wagner",
+    "featured": false
+}

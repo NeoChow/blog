@@ -1,0 +1,13 @@
+<h1>Posts in {{month}}</h1>
+{{repeat posts}}
+    {{repeat posts}}
+    <div class="post">
+        <a href="{{link}}"><img src="{{imageLink}}" /></a>
+        <div id="description">
+            <h2><a href="{{link}}">{{title}}</a></h2>
+            <p class="published"><a href="{{dayLink}}"><time>{{published}}</time></a></p>
+            <p>{{summary}}</p>
+        </div>
+    </div>
+    {{end}}
+{{end}}

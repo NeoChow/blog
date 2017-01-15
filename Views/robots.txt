@@ -1,0 +1,3 @@
+Sitemap: http://drewag.me/sitemap.xml
+Disallow: /preview
+Disallow: /subscribers/unsubscribe

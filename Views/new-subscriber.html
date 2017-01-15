@@ -1,0 +1,13 @@
+<h1>Subscribe To Future Posts</h1>
+<form method="POST">
+    {{ if error }}
+    <p class="error">{{ error }}</p>
+    {{ end }}
+    {{ if message }}
+    <p class="message">{{ message }}</p>
+    {{ end }}
+    <p>To receive an email each time I publish a post enter your email below. You can unsubscribe at any time.</p>
+
+    <input type="email" name="email" value="{{ email }}" placeholder="your-email@domain.com" />
+    <input type="submit" />
+</form>

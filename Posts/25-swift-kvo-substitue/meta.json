@@ -1,0 +1,7 @@
+{
+    "title": "Swift KVO Substitute: Observable Variables",
+    "summary": "My attempt to implement a KVO replacement purely in Swift",
+    "published": "2014-07-20",
+    "author": "Andrew Wagner",
+    "featured": false
+}

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drewag&#x27;s Blog</title>
+    <link href="http://localhost:8080/assets/css/main.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:8080/assets/css/post.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://localhost:8080/assets/css/prismjs.css" media="all" rel="stylesheet" type="text/css" />
+    <meta name="description" content="Programming, user experience, and more with a concentration on Swift and independent software development">
+</head>
+<body>
+<div id="top-bar">
+  <div class="centered-content">
+    <a href="/"></a>
+  </div>
+</div>
+<div id="main">
+  <div id="content" class="centered-content">
+    <article class="post">
+      <header>
+          <h1><a href="/posts/7-cool-features-in-swift">7 Cool Features in Swift</a></h1>
+          <p><time>Published on June 29th, 2014</time></p>
+          <img src="https://static01.nyt.com/images/2016/12/25/world/25israel1/25israel1-master768.jpg" />
+      </header>
+
+      <p>I have been spending a lot of time with Swift since it was announced at WWDC. It certainly has its bugs and rough spots, but I have already discovered a number of really cool parts of the language that I would like to share because they make me feel very excited about the future of iOS and OS X development.</p>
+      <p>My strongest comparisons will be to Objective-C since that is the language it will be replacing or at least accompanying. Therefore, I am not necessarily saying similar features don’t exist in other languages, many of them do; I am simply concentrating on how Swift will change the daily lives of iOS and OSX programmers.</p>
+
+      <h2>1. <a name="extend-structs-and-literals" href="#extend-structs-and-literals">Extend Structs and Literals</a></h2>
+
+      <p>I love that you can extend structs in Swift. It can be really useful to add functionality to an existing structure. One prime example for me is the ability to add a <code>center</code> method to a <code>CGRect</code> that will return the center point of the rectangle:</p>
+
+<pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">extension</span> CGRect <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> center<span class="token punctuation">:</span> CGPoint <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">CGPoint<span class="token punctuation">(</span></span>
+            x<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>origin<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token keyword">self</span><span class="token punctuation">.</span>size<span class="token punctuation">.</span>width <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">,</span>
+            y<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">.</span>origin<span class="token punctuation">.</span>y <span class="token operator">+</span> <span class="token keyword">self</span><span class="token punctuation">.</span>size<span class="token punctuation">.</span>height <span class="token operator">/</span> <span class="token number">2.0</span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+      <p>I have to use the center of a rectangle a lot and the intention of the code becomes much clearer if I can use it by name instead of always doing the math.</p>
+
+      <p>It can also be useful to extend literals. In ruby, there is a useful method on integers called <code>repeat</code>. Basically you can call <code>repeat</code> on an integer with a block that will be executed however many times that integer defines. In Swift, the extension to make this possible would look like this:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">extension</span> Int <span class="token punctuation">{</span>
+          <span class="token keyword">func</span> <span class="token function">repeat<span class="token punctuation">(</span></span>block <span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token number">0</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token keyword">self</span> <span class="token punctuation">{</span>
+                  <span class="token function">block<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+              <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      </code></pre>
+
+
+      <p>You can then use it like so:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token number">3</span><span class="token punctuation">.</span>repeat <span class="token punctuation">{</span>
+         <span class="token comment" spellcheck="true"> // called 3 times
+      </span>    <span class="token function">println<span class="token punctuation">(</span></span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      </code></pre>
+
+
+      <p><strong>Note</strong>: The parenthesis can be left out if the only parameter is a closure</p>
+
+      <h2>2. <a name="enumeration-cases-can-hold-values" href="#enumeration-cases-can-hold-values">Enumeration Cases Can Hold Values</a></h2>
+
+      <p>In Swift, the cases of an enumeration can hold values known as <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/Enumerations.html#//apple_ref/doc/uid/TP40014097-CH12-XID_189">Associated Values</a> which creates an elegant way to solve certain types of problems. A simple example of this is a network request:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">struct</span> NetRequest <span class="token punctuation">{</span>
+          <span class="token keyword">enum</span> Method <span class="token punctuation">{</span>
+              <span class="token keyword">case</span> GET
+              <span class="token keyword">case</span> <span class="token function">POST<span class="token punctuation">(</span></span><span class="token keyword">String</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token keyword">var</span> URL<span class="token punctuation">:</span> <span class="token keyword">String</span>
+          <span class="token keyword">var</span> method<span class="token punctuation">:</span> Method
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">var</span> getRequest <span class="token operator">=</span> <span class="token function">NetRequest<span class="token punctuation">(</span></span>URL<span class="token punctuation">:</span> <span class="token string">"http://drewag.me"</span><span class="token punctuation">,</span> method<span class="token punctuation">:</span> <span class="token punctuation">.</span>GET<span class="token punctuation">)</span>
+      <span class="token keyword">var</span> postRequest <span class="token operator">=</span> <span class="token function">NetRequest<span class="token punctuation">(</span></span>URL<span class="token punctuation">:</span> <span class="token string">"http://drewag.me"</span><span class="token punctuation">,</span> method<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token function">POST<span class="token punctuation">(</span></span><span class="token string">"{\"username\": \"drewag\"}"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      </code></pre>
+
+
+      <p>A GET request does not have a request body but a POST request does. Instead of having a potentially unused member variable, you can define the content body of the POST to be directly in the <code>Method</code> enum.</p>
+
+      <p>Possibly the best example of this is the <code>Optional</code> in Swift. The Swift compiler helps us with some syntactic sugar, but in reality when you define an optional <code>String</code> like this: <code>var myString : String?</code> the compiler actually translates it to <code>var myString : Optional&lt;String&gt;</code>. An <code>Optional</code> is defined as follows:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">enum</span> Optional <span class="token punctuation">{</span>
+          <span class="token keyword">case</span> None
+          <span class="token keyword">case</span> <span class="token function">Some<span class="token punctuation">(</span></span>T<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      </code></pre>
+
+
+      <p>In the <code>None</code> case (<code>nil</code>), there is no actual value associated with it, but in the <code>Some</code> case, there is a concrete value associated with it. This is a really elegant way to express a variable that can lack a value without having pointers exposed in the language and without allowing all values to be nil.</p>
+
+      <h2>3. <a name="keeps-your-collections-safe-and-clear" href="#keeps-your-collections-safe-and-clear">Keeps Your Collections Safe and Clear</a></h2>
+
+      <p>Collections in Objective-C all use the most generic class type available, <code>id</code>. This means that you can put any value into a collection including a mix of objects and often times, this leaves the types of a collection unclear. This is something I have always thought that C++ had over Objective-C. C++ has <a href="http://en.wikipedia.org/wiki/Template_(C%2B%2B">Templates</a>) that allow you to define a collection with a specific type like <code>vector&lt;int&gt;</code>. Swift borrows very similar syntax and functionality with their <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-XID_234">Generics</a> feature.</p>
+
+      <p>The following is a simple example of a situation where Generics can save time and prevent bugs:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">class</span> <span class="token class-name">Word</span> <span class="token punctuation">{</span>
+          <span class="token keyword">enum</span> PartOfSpeech <span class="token punctuation">{</span>
+              <span class="token keyword">case</span> Noun<span class="token punctuation">,</span> Pronoun<span class="token punctuation">,</span> Verb
+          <span class="token punctuation">}</span>
+
+          <span class="token keyword">var</span> value<span class="token punctuation">:</span> <span class="token keyword">String</span>
+          <span class="token keyword">var</span> partOfSpeech<span class="token punctuation">:</span> PartOfSpeech
+
+          <span class="token keyword">init</span><span class="token punctuation">(</span>_ value<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">,</span> _ partOfSpeech<span class="token punctuation">:</span> PartOfSpeech<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">self</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+              <span class="token keyword">self</span><span class="token punctuation">.</span>partOfSpeech <span class="token operator">=</span> partOfSpeech
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">var</span> sentence <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token function">Word<span class="token punctuation">(</span></span><span class="token string">"I"</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>Pronoun<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Word<span class="token punctuation">(</span></span><span class="token string">"ran"</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>Verb<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Word<span class="token punctuation">(</span></span><span class="token string">"home"</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>Noun<span class="token punctuation">)</span><span class="token punctuation">]</span>
+      sentence<span class="token punctuation">.</span><span class="token function">append<span class="token punctuation">(</span></span><span class="token string">"quickly"</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"> // Cannot convert the expression's type '()' to type 'Word'
+      </span>sentence<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>lowercaseString<span class="token comment" spellcheck="true"> // Could not find member 'lowercaseString'
+      </span>sentence<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>value<span class="token punctuation">.</span>lowercaseString
+      </code></pre>
+
+
+      <p>Above I have defined a class <code>Word</code> that contains a String for the actual word and also a part of speech. Then I defined an array of words called <code>sentence</code>.</p>
+
+      <p>If another programmer saw a variable called <code>sentence</code> defined as an array, I think it would be a pretty safe bet to assume that it is simply an array of strings. In Objective-C, this kind of misconception would not be caught until runtime because the compiler doesn’t know what type is supposed to go into the array, but in Swift, every array is defined as holding a specific type. In the example above, the compiler infers that the array is of type <code>Word[]</code>. If you wanted to be more explicitly you could write its definition like so: <code>var sentence : Word[] = …</code> but it isn’t necessary. Even without explicitly defining it as such, the compiler gives an error if you try to append a value to it that is not a <code>Word</code>. It also gives an error if you try to operate on the value as if it were a <code>String</code>.</p>
+
+      <p>This feature will make Swift APIs including collections much more easily understood and safer to operate with.</p>
+
+      <h2>4. <a name="multiple-functions-with-different-types" href="#multiple-functions-with-different-types">Multiple Functions with Different Types</a></h2>
+
+      <p>In Swift, you can define multiple versions of a function, with different implementations, with the same name as long as they take different types. This is great for defining functions that could apply to many different types but require different implementations for each. An example would be functions to add two values mathematically:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">func</span> <span class="token function">mathmaticallyAdd<span class="token punctuation">(</span></span>a<span class="token punctuation">:</span> Int<span class="token punctuation">,</span> b<span class="token punctuation">:</span> Int<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Int <span class="token punctuation">{</span>
+          <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">func</span> <span class="token function">mathmaticallyAdd<span class="token punctuation">(</span></span>a<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">,</span> b<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token keyword">String</span> <span class="token punctuation">{</span>
+          <span class="token keyword">let</span> aNum <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">toInt<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+          <span class="token keyword">let</span> bNum <span class="token operator">=</span> b<span class="token punctuation">.</span><span class="token function">toInt<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span> <span class="token string">"\((aNum ? aNum! : 0) + (bNum ? bNum! : 0))"</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token function">mathmaticallyAdd<span class="token punctuation">(</span></span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"> // returns 9
+      </span><span class="token function">mathmaticallyAdd<span class="token punctuation">(</span></span><span class="token string">"2"</span><span class="token punctuation">,</span> <span class="token string">"7"</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true"> // returns “9”
+      </span></code></pre>
+
+
+      <p>There is no reason to define two different functions like <code>mathmaticallyAddInts</code> and <code>mathmaticallyAddStrings</code>. That would be overly verbose because the intention is clear enough with just <code>mathmaticallyAdd</code>. In the definition using <code>Int</code>, the function can just use the <code>+</code> operator. However, in the <code>String</code> implementation, the function must first convert the strings to integers.</p>
+
+      <p>I do not inherently dislike verbosity in a programming language, but I certainly don’t want to be forced to make something overly verbose. The goal is to make the intention clear with as few characters as possible.</p>
+
+      <h2>5. <a name="willset-didset" href="#willset-didset">WillSet and DidSet, No Need to Completely Override Setters</a></h2>
+
+      <p>In Objective-C there were a lot of circumstances where I would override a property’s setter so that I could perform an action before or after setting the value. This always required boilerplate code to do the actual value assigning on top of whatever action I actually wanted to perform that was especially cumbersome if I wanted the property to be atomic.</p>
+
+      <p>In Swift, there is a built in mechanism to make performing actions immediately after or immediately before an assignment that removes the need for the boilerplate code. This feature is called <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-XID_333">Property Observers</a>. Basically you can define a <code>willSet</code> and / or a <code>didSet</code> method within a property that is automatically called at the appropriate time. <code>willSet</code> is provided a variable <code>newValue</code> and <code>didSet</code> is provided variable <code>oldValue</code>. An example of this is as follows:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">class</span> <span class="token class-name">MyView</span> <span class="token punctuation">:</span> UIView <span class="token punctuation">{</span>
+          <span class="token keyword">var</span> aSubview <span class="token punctuation">:</span> UIView <span class="token punctuation">{</span>
+              <span class="token keyword">didSet</span> <span class="token punctuation">{</span>
+                  oldValue<span class="token punctuation">.</span><span class="token function">removeFromSuperview<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+                  <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">addSubview<span class="token punctuation">(</span></span>aSubview<span class="token punctuation">)</span>
+              <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token keyword">init</span><span class="token punctuation">(</span>frame<span class="token punctuation">:</span> CGRect<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">self</span><span class="token punctuation">.</span>aSubview <span class="token operator">=</span> <span class="token function">UIView<span class="token punctuation">(</span></span><span class="token punctuation">)</span>
+
+              <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>frame<span class="token punctuation">:</span> frame<span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      </code></pre>
+
+
+      <p>In this <code>MyView</code> class, whenever it is assigned a new <code>aSubview</code>, the old one is automatically removed and the new one is added as a subview. I do this when I will be changing out a subview often and from multiple places so I don’t always have to track when the view is attached or not and I don’t have to duplicated the <code>addSubview</code> code.</p>
+
+      <h2>6. <a name="weak-and-unowned-in-closures" href="#weak-and-unowned-in-closures">Weak and Unowned In Closures</a></h2>
+
+      <p>Memory management is still not completely automatic in Swift as it still uses <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html">Automatic Reference Counting</a>, but they greatly improved the syntax. Instead of having to declare a <code>weak</code> or <code>unsafe_unretained</code> variable outside of the block, you can define how a closure should capture outside variables using <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_67">Capture Lists</a>. Here is an example for both <code>weak</code> and <code>unowned</code> in Swift:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">class</span> <span class="token class-name">FilePickerController</span> <span class="token punctuation">:</span> UIViewController <span class="token punctuation">{</span>
+          <span class="token keyword">var</span> onDidPickFileWithPath <span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>path <span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">?</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">class</span> <span class="token class-name">DocumentViewController</span> <span class="token punctuation">:</span> UIViewController <span class="token punctuation">{</span>
+          <span class="token keyword">var</span> filePicker<span class="token punctuation">:</span> FilePickerController<span class="token operator">?</span>
+          <span class="token keyword">var</span> content<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token operator">?</span>
+
+          <span class="token keyword">init</span><span class="token punctuation">(</span>fileAtURL URL<span class="token punctuation">:</span> NSURL<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>nibName<span class="token punctuation">:</span> nil<span class="token punctuation">,</span> bundle<span class="token punctuation">:</span> nil<span class="token punctuation">)</span>
+
+              <span class="token keyword">var</span> request <span class="token operator">=</span> <span class="token function">NSURLRequest<span class="token punctuation">(</span></span>URL<span class="token punctuation">:</span> URL<span class="token punctuation">)</span>
+
+             <span class="token comment" spellcheck="true"> // weak: Have self automatically set to nil if it is deallocated
+      </span>        NSURLConnection<span class="token punctuation">.</span><span class="token function">sendAsynchronousRequest<span class="token punctuation">(</span></span>request<span class="token punctuation">,</span> queue<span class="token punctuation">:</span> nil<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token keyword">weak</span> <span class="token keyword">self</span><span class="token punctuation">]</span>
+                  <span class="token punctuation">(</span>response<span class="token punctuation">,</span> data<span class="token punctuation">,</span> error<span class="token punctuation">)</span> <span class="token keyword">in</span>
+                  <span class="token keyword">if</span> <span class="token keyword">let</span> actualSelf <span class="token operator">=</span> <span class="token keyword">self</span> <span class="token punctuation">{</span>
+                     <span class="token comment" spellcheck="true"> // Captures an owning reference "actualSelf" so interacting with it in this
+      </span>               <span class="token comment" spellcheck="true"> // block is safe
+      </span>                actualSelf<span class="token punctuation">.</span>content <span class="token operator">=</span> <span class="token function">NSString<span class="token punctuation">(</span></span>data<span class="token punctuation">:</span> data<span class="token punctuation">,</span> encoding<span class="token punctuation">:</span> NSUTF8StringEncoding<span class="token punctuation">)</span>
+                  <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span>
+
+          <span class="token keyword">func</span> <span class="token function">presentFilePicker<span class="token punctuation">(</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">if</span> <span class="token operator">!</span>filePicker <span class="token punctuation">{</span>
+                  filePicker <span class="token operator">=</span> <span class="token function">FilePickerController<span class="token punctuation">(</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                 <span class="token comment" spellcheck="true"> // unowned: Don't worry about the nil case if you know it will never happen
+      </span>            filePicker<span class="token operator">!</span><span class="token punctuation">.</span>onDidPickFileWithPath <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token keyword">unowned</span> <span class="token keyword">self</span><span class="token punctuation">]</span>
+                      <span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">)</span> <span class="token keyword">in</span>
+                      <span class="token keyword">self</span><span class="token punctuation">.</span>content <span class="token operator">=</span> NSString<span class="token punctuation">.</span><span class="token function">stringWithContentsOfFile<span class="token punctuation">(</span></span>path<span class="token punctuation">,</span> encoding<span class="token punctuation">:</span> NSUTF8StringEncoding<span class="token punctuation">,</span> error<span class="token punctuation">:</span> nil<span class="token punctuation">)</span>
+
+                  <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+
+              <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">presentViewController<span class="token punctuation">(</span></span>filePicker<span class="token operator">!</span><span class="token punctuation">,</span> animated<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> completion<span class="token punctuation">:</span> nil<span class="token punctuation">)</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      </code></pre>
+
+
+      <p>I defined a <code>DocumentViewController</code> that can be initialized with a URL. It then begins to download the contents of the URL which is done asynchronously. There is no reason to keep the <code>DocumentViewController</code> around if the view controller is dismissed so I used a <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_68">weak reference</a>. To do so, I simply preface the closure with <code>[weak self]</code>. This indicates that I want to capture <code>self</code> weakly. If the <code>DocumentViewController</code> gets deinitialized, self will be set to <code>nil</code>. However, there could also be a race condition where the view controller gets dismissed while the closure is being executed. To prevent this causing problems, I capture a strong reference to <code>self</code> using <code>actualSelf</code> during the execution of the closure. When the closure exits, the strong reference will go away and the view controller is free to be deinitialized again.</p>
+
+      <p>I also created a <code>FilePickerController</code> class that theoretically allows the user to pick a file. It provides a closure member that would be called when the user picks a file. The <code>DocumentViewController</code> that I defined, has a method to present the file picker and handle the user picking a file. If this closure were to strongly capture a reference to self, there would be a circular reference because <code>self</code>owns the closure through its ownership of the <code>FilePickerController</code>. In this case, I know that the closure will only ever exist while the <code>DocumentViewController</code> exists so I can use an <a href="https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_68">unowned reference</a> by prefacing the closure with <code>[unowned self]</code>. Now I don’t have to do anything special with <code>self</code> within the closure. I can use it normally.</p>
+
+      <p>This is much cleaner than what used to be necessary in Objective-C.</p>
+
+      <h2>7. <a name="initialization-safety" href="#initialization-safety">Initialization Safety</a></h2>
+
+      <p>In Objective-C there was a bug that I would fairly often write. It would never make it to production, but it would cause me to scratch my head and spend a few minutes debugging it. It is a pretty common pattern that I have a mutable array in a class that I want to load contents into. This requires that the array first be initialized so that it can be added to. I would often forget to put this initialization into my class and it would continue on happily sending messages to the nil array, not actually adding anything to it.</p>
+
+      <p>In Swift, the compiler will catch this for two reasons. One is that you have to explicitly handle the <code>nil</code> case in swift, but the one I want to concentrate on in this section is initialization safety. If you leave any member variable uninitialized after an initializer, your app will not build. A simple example of this would be a <code>Directory</code> class with a <code>contents</code> array:</p>
+
+      <pre class=" language-swift"><code class=" language-swift" data-language="swift"><span class="token keyword">class</span> <span class="token class-name">FileSystemItem</span> <span class="token punctuation">{</span>
+          <span class="token keyword">var</span> path<span class="token punctuation">:</span> <span class="token keyword">String</span>
+
+          <span class="token keyword">init</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">self</span><span class="token punctuation">.</span>path <span class="token operator">=</span> path
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">class</span> <span class="token class-name">Directory</span><span class="token punctuation">:</span> FileSystemItem <span class="token punctuation">{</span>
+          <span class="token keyword">var</span> contents<span class="token punctuation">:</span> <span class="token punctuation">[</span>FileSystemItem<span class="token punctuation">]</span>
+
+          <span class="token keyword">init</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> <span class="token keyword">String</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token keyword">self</span><span class="token punctuation">.</span>contents <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token comment" spellcheck="true"> // required
+      </span>
+              <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span>path<span class="token punctuation">:</span> path<span class="token punctuation">)</span><span class="token comment" spellcheck="true"> // required
+      </span>    <span class="token punctuation">}</span>
+
+          <span class="token keyword">func</span> <span class="token function">loadContents<span class="token punctuation">(</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+             <span class="token comment" spellcheck="true"> // ...
+      </span>       <span class="token comment" spellcheck="true"> // self.contents.append(file)
+      </span>       <span class="token comment" spellcheck="true"> // ...
+      </span>    <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      </code></pre>
+
+
+      <p>If I were to leave out the <code>self.conents = []</code> line, the compiler would complain with the error: “Property ‘self.contents’ not initialized at super.init call”. This will save me lots of time.</p>
+
+      <p>Another type of problem that initializer safety can help catch is bypassing the initialization of a superclasses variable. In Objective-C there is a convention called <a href="https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Initialization/Initialization.html#//apple_ref/doc/uid/TP40010810-CH6-SW3">Designated Initializers</a>. Basically it says that every class should have an initializer that initializes the entire class to a safe state. Other initializers should always call a designated initializer because that ensures the class is never in a bad state. However, this is not enforced in Objective-C. In Swift, they made this into something the compiler guarantees. This means that the <code>Directory</code> class above must call the <code>init(path)</code> initializer or the compiler gives an error. This means that the class can never get into a situation where <code>path</code> is not defined. This becomes even more important when classes get bigger an inheritance gets deeper.</p>
+
+        <footer><p>Written by <a href="https://twitter.com/drewag">Andrew Wagner</a></p></footer>
+    </article>
+    <!--
+    <h1>About this Blog</h1>
+    <p>
+      My name is Andrew Wagner and I am a software developer focussed on <strong>iOS and web development</strong>. I have
+      a passion for <strong>product and user experience development</strong>. I don't care what technologies or skills I
+      have to learn as long as they allow me to shape the products I develop to provide the best
+      experience possible for its users.
+    </p>
+    <p>
+      My main skills are in programming and user experience, but I have dabbled in graphic design, product
+      design, marketing, business development, and everything else involved in turning an idea into a
+      marketable reality.
+    </p>
+    <p>
+      On this blog I write about the practical things that I come across while working as a <strong>freelance
+        developer and building my own app business</strong>.
+    </p>
+
+    <h1>Featured Posts</h1>
+    <div class="post">
+      <a href="/posts/about-me"><img src="https://assets.entrepreneur.com/content/16x9/822/1413823428-amazingly-free-stock-websites.jpg" /></a>
+      <div id="description">
+        <h2><a href="/posts/about-me">About Me</a></h2>
+        <p class="published"><time>January 22nd, 2013</time></p>
+        <p>Concrete examples for some cool and practical new features in Swift that will improve the daily lives of iOS and OS X programmers.</p>
+      </div>
+    </div>
+    <div class="post">
+      <a href="/posts/about-me"><img src="https://assets.entrepreneur.com/content/16x9/822/1413823428-amazingly-free-stock-websites.jpg" /></a>
+      <div id="description">
+        <h2><a href="/posts/7-cool-features-in-swift">7 Cool Features in Swift</a></h2>
+        <p class="published"><time>June 29th, 2014</time></p>
+        <p>Concrete examples for some cool and practical new features in Swift that will improve the daily lives of iOS and OS X programmers.</p>
+      </div>
+    </div>
+    <div class="post">
+      <a href="/posts/about-me"><img src="https://assets.entrepreneur.com/content/16x9/822/1413823428-amazingly-free-stock-websites.jpg" /></a>
+      <div id="description">
+        <h2><a href="/posts/getting-started-with-swift">Getting Started With Swift</a></h2>
+        <p class="published"><time>July 13th, 2014</time></p>
+        <p>A list of key concepts to know when getting started with Swift and links to resources to stay current with its development.</p>
+      </div>
+    </div>
+
+    <h1>Recent Posts</h1>
+    <div class="post">
+      <h3><a href="/posts/practical-use-for-curried-functions-in-swift">Practical Use for Curried Functions in Swift</a></h3>
+      <p class="published"><time>August 6th, 2014</time></p>
+      <p>A practical example of how curried functions in Swift can be useful for implementing a logger</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/swift-kvo-substitute-observable-variables">Swift KVO Substitute: Observable Variables</a></h3>
+      <p class="published"><time>July 20th, 2014</time></p>
+      <p>My attempt to implement a KVO replacement purely in Swift</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/getting-started-with-swift">Getting Started With Swift</a></h3>
+      <p class="published"><time>July 13th, 2014</time></p>
+      <p>A list of key concepts to know when getting started with Swift and links to resources to stay current with its development.</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/uses-for-implicitly-unwrapped-optionals-in-swift">Uses for Implicitly Unwrapped Optionals in Swift</a></h3>
+      <p class="published"><time>July 5th, 2014</time></p>
+      <p>A list with concrete examples of when and when not to use Implicitly Unwrapped Optionals in Swift.</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/what-is-an-optional-in-swift">What is an Optional in Swift</a></h3>
+      <p class="published"><time>July 5th, 2014</time></p>
+      <p>A summary with examples of what an Optional is in Swift</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/7-cool-features-in-swift">7 Cool Features in Swift</a></h3>
+      <p class="published"><time>June 29th, 2014</time></p>
+      <p>Concrete examples for some cool and practical new features in Swift that will improve the daily lives of iOS and OS X programmers.</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/swift-s-weird-handling-of-basic-value-types-and-anyobject"> Swift's Weird Handling of Basic Value Types and AnyObject</a></h3>
+      <p class="published"><time>June 22nd, 2014</time></p>
+      <p>Basic value types like String and Int can be secretly converted to Objective-C types like NSString and NSNumber. This has some interesting effects and implications.</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/testing-asynchronous-code-in-objective-c">Testing Asynchronous Code in Objective-C</a></h3>
+      <p class="published"><time>March 31st, 2014</time></p>
+      <p>Testing asynchronous code in Objective-C can be a real pain unless you make one simple change to the way you program it in the first place.</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/better-uialert-handling-and-easier-testing">Better UIAlert Handling and Easier Testing</a></h3>
+      <p class="published"><time>March 31st, 2014</time></p>
+      <p>A more declarative and testable way to display alerts in iOS.</p>
+    </div>
+    <div class="post">
+      <h3><a href="/posts/be-a-better-indie-5-listen-to-podcasts">Be A Better Indie - 5. Listen to Podcasts</a></h3>
+      <p class="published"><time>February 17th, 2014</time></p>
+      <p>A list with descriptions of the main podcasts that have made me a better developer and keep me informed.</p>
+    </div>
+
+    <h3><a href="/posts">All Posts</a></h3>
+    -->
+  </div>
+  <div>
+    <div id="footer">
+      <p>If you would like to discuss a post with me, I encourage you to contact me on Twitter or LinkedIn</p>
+      <a href="https://twitter.com/drewag">
+          <img alt="Twittericon" src="http://localhost:8080/assets/img/TwitterIcon.png" />
+          Follow Me
+      </a>
+      <a href="http://www.linkedin.com/in/drewag/">
+          <img alt="Linkedinicon" src="http://localhost:8080/assets/img/LinkedInIcon.png" />
+          Connect With Me
+      </a>
+      <form accept-charset="UTF-8" action="/subscribers.json" class="new_subscriber" data-remote="true" id="new_subscriber" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="hojZkxjetfZktRnMIO6nXsWf+1tOdl3bFGGtrX6qqT8=" /></div>
+        <header>Subscribe To Future Posts</header>
+        <p>To receive an email each time I publish a post enter your email below. You can unsubscribe at any time.</p>
+        <input id="subscriber_email" name="subscriber[email]" placeholder="your-email@domain.com" size="30" type="text" />
+        <div id="results"></div>
+
+        <input name="commit" type="submit" value="Subscribe" />
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

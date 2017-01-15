@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drewag&#x27;s Blog{{if title}} - {{title}}{{end}}</title>
+    <link href="/assets/css/main.css" media="all" rel="stylesheet" type="text/css" />
+    {{repeat stylesheets}}
+        <link href="{{link}}" media="all" rel="stylesheet" type="text/css" />
+    {{end}}
+    {{repeat scripts}}
+        <script src="{{link}}" type="text/javascript"></script>
+    {{end}}
+    <meta charset="UTF-8">
+    <meta name="description" content="Programming, user experience, and more with a concentration on Swift and independent software development">
+</head>
+<body>
+<div id="top-bar">
+  <div class="centered-content">
+    <a href="/"></a>
+  </div>
+</div>
+<div id="main">
+  <div id="content" class="centered-content">

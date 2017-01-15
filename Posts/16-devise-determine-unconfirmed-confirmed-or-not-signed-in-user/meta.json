@@ -1,0 +1,7 @@
+{
+    "title": "Devise: determine unconfirmed, confirmed, or not signed in user",
+    "summary": "While developing a Rails backend using Devise for user management, I ran into trouble determining a user's status. This is how I solved that problem.",
+    "published": "2014-02-10",
+    "author": "Andrew Wagner",
+    "featured": false
+}

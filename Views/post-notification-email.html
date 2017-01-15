@@ -1,0 +1,28 @@
+<body style="margin:0;padding:0">
+<table width="100%" cellspacing="0" cellpadding="0">
+    <tr style="background:url('{{domain}}/assets/img/top-bar-background.jpg'); background-size:1px 43px; background-repeat:horizontal;">
+        <td height="43px" align="center">
+            <a href="{{domain}}" style="display:block; width:447px; height: 43px; background:url('{{domain}}/assets/img/top-bar-icon.jpg'); background-size:447px 43px;"></a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <h1 style="width: 600px;font-family:'Georgia', serif;font-size:20pt;text-align:center;margin-top:1.5em;padding-bottom:0.1em;border-bottom:solid 1px #176382; margin-bottom:5px;color:#176382"><a href="{{domain}}{{link}}" style="text-decoration:none; color:inherit;">{{title}}</a></h1>
+            <p style="color:#585858;margin-bottom:0.2em;margin-top:0.1em;font-size:10pt;text-align:center;font-family:'Verdana',sans-serif;"><time>Published on {{published}}</time></p>
+            {{if imageLink}}<img src="{{domain}}{{imageLink}}" style="width: 600px; margin:1em 0;"/>{{end}}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <p style="text-align:left; width:600px; font-family:'Verdana',sans-serif;">{{summary}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <p style="text-align:right;width:600px; margin-top:10px;">
+                <a href="{{domain}}{{link}}" style="color:#176382; font-size:20px;">Read More</a>
+            </p>
+        </td>
+    </tr>
+</table>
+</body>

@@ -1,0 +1,58 @@
+.post {
+  width:100%;
+  font-size:0;
+  display:block;
+  margin-top:20px;
+}
+
+.post img {
+  width:30%;
+  height:28%;
+  background-color:#2b2b2b;
+  display:inline-block;
+  outline:2px solid #176382;
+  margin:0px;
+  padding:0px;
+  vertical-align:middle;
+}
+
+.post #description {
+  width:70%;
+  margin:0px;
+  padding:0px;
+  display:inline-block;
+  font-size:11pt;
+  vertical-align:middle;
+}
+
+.post h2, .post h3, .post p {
+  margin:0;
+}
+
+.post #description h2, .post #description p {
+  margin-left:20px;
+}
+
+.post h2, .post h3 {
+  font-size:14pt;
+}
+
+.post .published {
+  color:#585858;
+  margin-bottom:0.2em;
+  margin-top:0.1em;
+  font-size:10pt;
+}
+
+.post .published a {
+  text-decoration: none;
+  color:inherit;
+}
+
+.post p {
+  font-size:11pt;
+}
+
+.post h3 {
+  margin-top:2em;
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title type="text">Drewag's Blog</title>
+    <subtitle type="text">programming, user experience, and more</subtitle>
+    <updated>{{mostRecentUpdated}}</updated>
+    <author><name>Andrew Wagner</name></author>
+    <id>http://drewag.me</id>
+    {{repeat posts}}
+    <entry>
+        <title>{{title}}</title>
+        <link href="http://drewag.me{{permaLink}}"/>
+        <id>http://drewag.me{{permaLink}}</id>
+        <updated>{{modified}}</updated>
+        <summary>{{summary}}</summary>
+        <author><name>Andrew Wagner</name></author>
+        <rights>&amp;copy; {{publishedYear}} Andrew Wagner</rights>
+        <content type="html">{{content}}</content>
+    </entry>
+    {{end}}
+</feed>
