@@ -93,7 +93,7 @@ class Post {
 
     var urlTitle: String {
         let components = self.directoryUrl.lastPathComponent.components(separatedBy: "-")
-        return components[1 ..< components.count - 1].joined(separator: "-")
+        return components[1 ..< components.count].joined(separator: "-")
     }
 
     var imageUrl: URL {
