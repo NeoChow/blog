@@ -42,12 +42,15 @@ parser.command(named: "server") { parser in
     let databasePassword = parser.string(named: "database_password")
     try parser.parse()
     DatabasePassword = databasePassword.parsedValue
+    print("starting...")
     try KituraServer(port: port.parsedValue, router: MainRouter()).start()
 }
 
 parser.command(named: "regenerate") { parser in
     let domain = parser.string(named: "domain")
+    let databasePassword = parser.string(named: "database_password")
     try parser.parse()
+    DatabasePassword = databasePassword.parsedValue
 
     let generator = StaticPagesGenerator()
     do {

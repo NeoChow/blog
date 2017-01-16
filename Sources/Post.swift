@@ -71,8 +71,7 @@ class Post {
 
     lazy var metaInfo: MetaInfo = {
         do {
-            let data = try Data(contentsOf: self.metaUrl)
-            let object = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            let object = try FileService.default.jsonObject(at: self.metaUrl)
             return try NativeTypesDecoder.decodableTypeFromObject(object, mode: .saveLocally)
         }
         catch let error as UserReportableError {

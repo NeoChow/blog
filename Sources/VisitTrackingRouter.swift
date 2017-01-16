@@ -14,7 +14,7 @@ struct VisitTrackingRouter: ParameterizedRouter {
             let connection = DatabaseConnection()
 
             let visit = Visit(
-                ip: request.ip,
+                ip: request.headers["X-Forwarded-For"] ?? request.ip,
                 route: route,
                 method: request.method,
                 source: request.formValues()["source"],
