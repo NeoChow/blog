@@ -8,10 +8,11 @@
 
 import Foundation
 import TextTransformers
+import SwiftPlusPlus
 
 class StaticPagesGenerator {
     var postsService = PostsService()
-    let fileManager = FileManager.default
+    let fileService = FileService.default
 
     func generateReturningNewPosts() throws -> [Post] {
         self.removeDirectory(at: "Generated-working")
@@ -35,11 +36,11 @@ class StaticPagesGenerator {
 
 private extension StaticPagesGenerator {
     func removeDirectory(at path: String) {
-        do { try self.fileManager.removeItem(atPath: path) } catch {}
+        self.fileService.removeItem(at: URL(fileURLWithPath: path))
     }
 
     func createDirectory(at path: String) {
-        do { try self.fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil) } catch {}
+        self.fileService.createDirectory(at: URL(fileURLWithPath: path))
     }
 
     func write(_ html: String, to path: String) throws {
@@ -47,11 +48,11 @@ private extension StaticPagesGenerator {
     }
 
     func moveItem(from: String, to: String) throws {
-        try self.fileManager.moveItem(atPath: from, toPath: to)
+        try self.fileService.moveItem(from: URL(fileURLWithPath: from), to: URL(fileURLWithPath: to))
     }
 
     func copyFile(from: String, to: String) throws {
-        try self.fileManager.copyItem(atPath: from, toPath: to)
+        try self.fileService.copyItem(from: URL(fileURLWithPath: from), to: URL(fileURLWithPath: to))
     }
 
     func generateIndex() throws {
@@ -268,7 +269,7 @@ private extension StaticPagesGenerator {
 
         for post in try self.postsService.loadAllPosts() {
             let directory = "Generated\(post.permanentRelativePath)"
-            if !FileManager.default.fileExists(atPath: directory) {
+            if !self.fileService.fileExists(at: URL(fileURLWithPath: directory)) {
                 newPosts.append(post)
             }
         }

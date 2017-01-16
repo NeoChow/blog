@@ -113,7 +113,7 @@ class Post {
     }
 
     init?(directoryUrl: URL) {
-        guard FileManager.default.fileExists(atPath: directoryUrl.relativePath) else {
+        guard FileService.default.fileExists(at: directoryUrl) else {
             return nil
         }
 

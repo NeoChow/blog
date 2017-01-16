@@ -23,8 +23,7 @@ struct PostsService {
         }
 
         let url = URL(fileURLWithPath: "Posts")
-        let fileManager = FileManager.default
-        let posts = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        let posts = FileService.default.contentsOfDirectory(at: url, skipHiddenFiles: true)
             .map({Post(directoryUrl: $0)!})
             .sorted(by: {$0.metaInfo.published.timeIntervalSince($1.metaInfo.published) > 0})
         self.allPosts = posts
