@@ -1,3 +1,35 @@
+<script type="application/ld+json">{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://drewag.me{{permaLink}}"
+  },
+  "headline": "{{title}}",
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://drewag.me{{imageUrl}}",
+    "width": 700,
+    "height": {{imageHeight}}
+  },
+  "datePublished": "{{isoPublished}}",
+  "dateModified": "{{isoModified}}",
+  "author": {
+    "@type": "Person",
+    "name": "Andrew Wagner"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Drewag, LLC",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://drewag.me/assets/img/logo.png",
+      "width": 271,
+      "height": 60
+    }
+  },
+  "description": "{{summary}}"
+}</script>
 <article class="post">
   <header>
       <h1><a href="{{permaLink}}">{{title}}</a></h1>

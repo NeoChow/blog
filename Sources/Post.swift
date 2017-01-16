@@ -1,4 +1,4 @@
-
+//
 //  Post.swift
 //  drewag.me
 //
@@ -20,6 +20,7 @@ class Post {
         let modified: Date
         let author: String
         let isFeatured: Bool
+        let imageHeight: Int
 
         var publishedYearString: String {
             let calendar = Calendar.current
@@ -134,6 +135,7 @@ extension Post.MetaInfo {
         self.modified = Date.distantPast
         self.author = "Error Post"
         self.isFeatured = true
+        self.imageHeight = 0
     }
 }
 
@@ -145,6 +147,7 @@ extension Post.MetaInfo: DecodableType {
         class modified: OptionalCoderKey<String> {}
         class author: CoderKey<String> {}
         class featured: CoderKey<Bool> {}
+        class image_height: CoderKey<Int> {}
     }
 
     public init(decoder: DecoderType) throws {
@@ -155,5 +158,6 @@ extension Post.MetaInfo: DecodableType {
         self.modified = try decoder.decode(Keys.modified.self)?.railsDate ?? published
         self.author = try decoder.decode(Keys.author.self)
         self.isFeatured = try decoder.decode(Keys.featured.self)
+        self.imageHeight = try decoder.decode(Keys.image_height.self)
     }
 }
