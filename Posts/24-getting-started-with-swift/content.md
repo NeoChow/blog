@@ -48,7 +48,7 @@ In Swift, there are two forms of types: [Value Types](https://developer.apple.co
 
 If you are not familiar with Generics from another language like C++, it can be hard to wrap you head around this change form Objective-C. In Objective-C it is common to use containers that store very generic types like `id`. Swift [makes these containers safer using generics](/posts/2014/06/29/7-cool-features-in-swift#keeps-your-collections-safe-and-clear).
 
-- [Generics (Apple)]((https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-XID_232)
+- [Generics (Apple)](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-XID_232)
 
 Follow Swift Tag on Stack Overflow
 -------------
