@@ -185,7 +185,7 @@ There are actually a few things that I like better about this implementation tha
 ### Cons
 
 - **Always manipulating `value`** - Whenever trying to access or change the value of an observable property, one must always do so using the `value` property of the observable wrapper. This muddles all of the code with the impertinent knowledge that this property is observable and makes it more work to convert a property to being observable.
-- **Requires Manually Unobserving** - Using [Associated Objects](http://nshipster.com/associated-objects/) in Objective-C, I was able to provide [my own wrapper for KVO](posts/objective-c-bindings) that removed the need to manually stop observing the object, it would automatically stop observing when the observed object got deallocated. So far I cannot think of a way to make this work in Swift and will mean a bunch of boilerplate code in the `deinit` method most likely.
+- **Requires Manually Unobserving** - Using [Associated Objects](http://nshipster.com/associated-objects/) in Objective-C, I was able to provide [my own wrapper for KVO](/posts/2013/01/28/objective-c-bindings) that removed the need to manually stop observing the object, it would automatically stop observing when the observed object got deallocated. So far I cannot think of a way to make this work in Swift and will mean a bunch of boilerplate code in the `deinit` method most likely.
 
 The Future
 -------
