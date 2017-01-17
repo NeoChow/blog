@@ -18,7 +18,7 @@ struct MainRouter: Router {
             }),
         ]),
 
-        .anyWithParam(consumeEntireSubPath: true, router: VisitTrackingRouter()),
+        //.anyWithParam(consumeEntireSubPath: true, router: VisitTrackingRouter()),
 
         .get("assets", router:  AssetRouter()),
         .any("subscribers", router: SubscribersRouter()),
