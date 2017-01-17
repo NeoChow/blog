@@ -14,14 +14,14 @@ class StaticPagesGenerator {
     var postsService = PostsService()
     let fileService = FileService.default
 
-    func generateReturningNewPosts() throws -> [Post] {
+    func generateReturningNewPosts(forDomain domain: String) throws -> [Post] {
         self.removeDirectory(at: "Generated-working")
         self.createDirectory(at: "Generated-working")
         try self.generateIndex()
         try self.generatePosts()
         try self.generateArchive()
-        try self.generateSitemap()
-        try self.generateAtomFeed()
+        try self.generateSitemap(forDomain: domain)
+        try self.generateAtomFeed(forDomain: domain)
 
         let newPosts = try self.checkForNewPosts()
 
@@ -126,7 +126,7 @@ private extension StaticPagesGenerator {
         print("done")
     }
 
-    func generateSitemap() throws {
+    func generateSitemap(forDomain domain: String) throws {
         print("Generating sitemap...", terminator: "")
 
         let posts = try self.postsService.loadAllPosts()
@@ -134,6 +134,7 @@ private extension StaticPagesGenerator {
             .map(FileContents())
             .map(Template(build: { builder in
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
+                    builder["domain"] = domain
                     builder["link"] = post.permanentRelativePath
                     builder["modified"] = post.metaInfo.modified.railsDate
                 })
@@ -145,7 +146,7 @@ private extension StaticPagesGenerator {
         print("done")
     }
 
-    func generateAtomFeed() throws {
+    func generateAtomFeed(forDomain domain: String) throws {
         print("Generating atom feed...", terminator: "")
 
         let posts = try self.postsService.loadAllPosts()
@@ -158,6 +159,7 @@ private extension StaticPagesGenerator {
 
                 builder["mostRecentUpdated"] = posts.first?.metaInfo.modified.railsDateTime
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
+                    builder["domain"] = domain
                     builder["title"] = post.metaInfo.title
                     builder["permaLink"] = post.permanentRelativePath
                     builder["modified"] = post.metaInfo.modified.iso8601DateTime

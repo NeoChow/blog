@@ -4,12 +4,12 @@
     <subtitle type="text">programming, user experience, and more</subtitle>
     <updated>{{mostRecentUpdated}}</updated>
     <author><name>Andrew Wagner</name></author>
-    <id>http://drewag.me</id>
+    <id>{{domain}}</id>
     {{repeat posts}}
     <entry>
         <title>{{title}}</title>
-        <link href="http://drewag.me{{permaLink}}"/>
-        <id>http://drewag.me{{permaLink}}</id>
+        <link href="{{domain}}{{permaLink}}"/>
+        <id>{{domain}}{{permaLink}}</id>
         <updated>{{modified}}</updated>
         <summary>{{summary}}</summary>
         <author><name>Andrew Wagner</name></author>

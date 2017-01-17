@@ -74,7 +74,7 @@ parser.command(named: "regenerate") { parser in
 
     let generator = StaticPagesGenerator()
     do {
-        let newPosts = try generator.generateReturningNewPosts()
+        let newPosts = try generator.generateReturningNewPosts(forDomain: domain.parsedValue)
 
         let connection = DatabaseConnection()
         var service = SubscriberService(connection: connection)
