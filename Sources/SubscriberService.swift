@@ -35,6 +35,8 @@ struct SubscriberService {
 
     func unsubscribe(_ subscriber: Subscriber) throws {
         try self.connection.execute(subscriber.delete)
+
+        NotificationService().notify(type: "User Unsubscribed", message: "Hopefully this is not a pattern!")
     }
 
     func subscriber(withUnsubscribeToken token: String) throws -> Subscriber? {
@@ -80,8 +82,8 @@ struct SubscriberService {
                 .string()
             let email = Email(
                 to: subscriber.email,
-                subject: "New Post",
-                from: "Drewag Notifications<donotreply@drewag.me>",
+                subject: "drewag.me: \(post.metaInfo.title)",
+                from: "drewag.me notifications<donotreply@drewag.me>",
                 HTMLBody: html
             )
             email.send()
