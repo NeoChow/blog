@@ -1,0 +1,86 @@
+<h1>Make a Donation</h1>
+
+<p>
+Thank you for your interest in donating! I choose not to put any ads on my site
+because I hate them as a user. However, I put a lot of time and effort into providing
+valuable content.
+</p>
+
+<p>
+If you have found value on this site, and can afford it, I would really appreciate
+a donation.
+</p>
+
+<p>
+Donations will encourage me to keep providing more valuable content and of course give
+me warm-and-fuzzies that people appreciate what I do!
+</p>
+
+<script>
+    var agreedAmount = 0
+    var handler = StripeCheckout.configure({
+        key: '{{stripeToken}}',
+        image: '/assets/img/profile.jpg',
+        locale: 'auto',
+        name: 'Andrew Wagner',
+        description: 'Make a donation to support this site',
+        zipCode: true,
+        panelLabel: 'Donate',
+        bitcoin: true,
+        alipay: true,
+        token: function(token, args) {
+           var xhr = new XMLHttpRequest();
+               xhr.onreadystatechange = function() {
+               if (xhr.readyState == XMLHttpRequest.DONE) {
+                   alert(xhr.responseText);
+               }
+           }
+           xhr.open("POST", "/donate/new", true);
+           xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+           xhr.send("amount=" + agreedAmount + "&token=" + token.id + "&email=" + token.email);
+        }
+    });
+
+    function donateFixed(e, button) {
+        agreedAmount = parseInt(button.dataset.amount);
+        handler.open({
+            amount: agreedAmount
+        });
+        e.preventDefault();
+    }
+
+    function donateCustom(e, form) {
+        agreedAmount = form.elements['amount'].value * 100;
+        if (agreedAmount > 0) {
+            handler.open({
+                amount: agreedAmount,
+            })
+            e.preventDefault();
+        }
+        else {
+            alert("Please enter a valid amount in the text box or select one of the other amount buttons.")
+        }
+    }
+
+    // Close Checkout on page navigation:
+    window.addEventListener('popstate', function() {
+        handler.close();
+    });
+</script>
+
+<form id="donate" onsubmit="donateCustom(event,this)">
+    <h2>Select an Amount</h2>
+    <div id="suggestions">
+        <a class="donate" onclick="donateFixed(event,this)" data-amount="200">$2</a>
+        <a class="donate" onclick="donateFixed(event,this)" data-amount="500">$5</a>
+        <a class="donate" onclick="donateFixed(event,this)" data-amount="1000">$10</a>
+        <a class="donate" onclick="donateFixed(event,this)" data-amount="2000">$20</a>
+    </div>
+    <p>or enter a custom one</p>
+    <div id="custom">
+        $<input id="amount" type="number" placeholder="10.00" min="0" step="1" />
+        <input type="submit" value="Donate" />
+    </div>
+</form>
+
+<p style="text-align:center;">All donations are handled securely through <a href="https://stripe.com/">stripe</a>.<br />I never have access to any of your secure payment information.</p>

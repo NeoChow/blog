@@ -4,17 +4,26 @@ import CommandLineParser
 import SwiftServeKitura
 
 var DatabasePassword = ""
+var StripePublicKey = ""
+var StripePrivateKey = ""
 
 struct MainRouter: Router {
     public var routes: [Route] = [
         .get("google85833a31c04058e9.html", handler: { request in
             return .handled(try request.response(withFileAt: "Views/google-webmaster-tools-verification.html", status: .ok))
         }),
+        .get(".well-known", subRoutes: [
+            .get("apple-developer-merchantid-domain-association", handler: { request in
+                return .handled(try request.response(withFileAt: "Views/apple-pay-verification", status: .ok))
+            }),
+        ]),
 
         .anyWithParam(consumeEntireSubPath: true, router: VisitTrackingRouter()),
 
         .get("assets", router:  AssetRouter()),
         .any("subscribers", router: SubscribersRouter()),
+
+        .any("donate", router: DonateRouter()),
         .any(router: FeaturesRouter()),
         .any(router: PagesRouter()),
         .any(router: PublishedRouter()),
@@ -44,9 +53,16 @@ let parser = Parser(arguments: CommandLine.arguments)
 parser.command(named: "server") { parser in
     let port = parser.int(named: "port")
     let databasePassword = parser.string(named: "database_password")
+    let publicKey = parser.string(named: "stripe_public_key")
+    let privateKey = parser.string(named: "stripe_private_key")
+
     try parser.parse()
+
     DatabasePassword = databasePassword.parsedValue
-    print("starting...")
+    StripePublicKey = publicKey.parsedValue
+    StripePrivateKey = privateKey.parsedValue
+
+    print("Staring Server...")
     try KituraServer(port: port.parsedValue, router: MainRouter()).start()
 }
 

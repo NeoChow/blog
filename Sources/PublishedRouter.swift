@@ -18,7 +18,7 @@ struct PublishedRouter: Router {
                     "Views/header.html",
                     "Generated/home.html",
                     "Views/footer.html",
-                    ],
+                ],
                 htmlBuild: { builder in
                     builder["title"] = "Home"
                     builder.buildValues(forKey: "stylesheets", withArray: ["/assets/css/home.css"], build: {$1["link"] = $0})
@@ -32,7 +32,7 @@ struct PublishedRouter: Router {
                         "Views/header.html",
                         "Generated/posts/archive.html",
                         "Views/footer.html",
-                        ],
+                    ],
                     htmlBuild: { builder in
                         builder["title"] = "All Posts"
                         builder.buildValues(forKey: "stylesheets", withArray: ["/assets/css/home.css"], build: {$1["link"] = $0})

@@ -23,12 +23,25 @@ body, html {
   text-align:left;
 }
 
-#top-bar a {
+#top-bar #logo {
   width:447px;
   height:43px;
   background:url('/assets/img/top-bar-icon.jpg');
   background-size:447px 43px;
-  display:block;
+  display:inline-block;
+}
+
+#top-bar #donate {
+    text-decoration:none;
+    line-height:20px;
+    height:20px;
+    margin-top:5px;
+    display:inline-block;
+    float:right;
+    color:white;
+    border:thin solid white;
+    padding:0.2em;
+    border-radius:0.4em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -41,6 +54,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top:1.5em;
   padding-bottom:0.1em;
   border-bottom:solid 1px #176382;
+  color: #176382;
 }
 
 a {
@@ -81,6 +95,23 @@ a {
 #footer form header {
   font-size:12pt;
   font-weight:600;
+}
+
+#footer #donate-call {
+    font-size:12pt;
+    padding-top:0.8em;
+    margin-bottom:0.5em;
+}
+
+#footer #donate {
+    background-color:#176382;
+    color:white;
+    padding:0.5em;
+    margin:0.5em;
+    border-radius: 5px;
+    margin-top:0;
+    margin-bottom:0.5em;
+    display:inline-block;
 }
 
 form input {

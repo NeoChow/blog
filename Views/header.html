@@ -9,6 +9,9 @@
     {{repeat scripts}}
         <script src="{{link}}" type="text/javascript"></script>
     {{end}}
+    {{repeat script}}
+        <script type="text/javascript">{{content}}</script>
+    {{end}}
     <meta charset="UTF-8">
     <meta name="description" content="Programming, user experience, and more with a concentration on Swift and independent software development">
     <!-- Google Analytics -->
@@ -25,7 +28,8 @@
 <body>
 <div id="top-bar">
   <div class="centered-content">
-    <a href="/"></a>
+    <a id="logo" href="/"></a>
+    <a id="donate" href="/donate">Donate</a>
   </div>
 </div>
 <div id="main">
