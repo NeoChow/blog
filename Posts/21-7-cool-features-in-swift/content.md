@@ -56,8 +56,8 @@ In Swift, the cases of an enumeration can hold values known as [Associated Value
         var method: Method
     }
 
-    var getRequest = NetRequest(URL: "http://drewag.me", method: .get)
-    var postRequest = NetRequest(URL: "http://drewag.me", method: .post("{\"username\": \"drewag\"}"))
+    var getRequest = NetRequest(URL: "https://drewag.me", method: .get)
+    var postRequest = NetRequest(URL: "https://drewag.me", method: .post("{\"username\": \"drewag\"}"))
 
 A GET request does not have a request body but a POST request does. Instead of having a potentially unused member variable, you can define the content body of the POST to be directly in the `Method` enum.
 

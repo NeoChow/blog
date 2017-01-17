@@ -3,7 +3,7 @@ The biggest feature from Objective-C that I miss in Swift is [Key Value Observin
 The Idea
 -------
 
-I decided to create a class called `Observable` that would be defined in a  similar way to an [Optional](http://drewag.me/posts/what-is-an-optional-in-swift) allowing one to “wrap” a value to make it observable. The observable wrapper would provide a mechanism to subscribe to value changes and then use [Property Observers](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-XID_332) to trigger the notifications.
+I decided to create a class called `Observable` that would be defined in a  similar way to an [Optional](/posts/2014/07/05/what-is-an-optional-in-swift) allowing one to “wrap” a value to make it observable. The observable wrapper would provide a mechanism to subscribe to value changes and then use [Property Observers](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-XID_332) to trigger the notifications.
 
 I am not a fan of using the [Delegate Design Pattern](https://developer.apple.com/library/ios/documentation/general/conceptual/DevPedia-CocoaCore/Delegation.html) for KVO because I feel that it spreads the logic of a specific observation out in the class making the code harder to understand and it can also create very lengthy delegate callback methods when observing multiple things. I prefer to define it right in place so I wanted to use closures instead.
 

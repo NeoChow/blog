@@ -20,7 +20,7 @@ Optionals are really important because variables cannot ever lack a value in Swi
 You need to understand what an Optional is, how to check if it is *nil*, and how to “unwrap” it to access the actual value if it is not *nil*.
 
 - [What is An Optional In Swift](/posts/what-is-an-optional-in-swift)
-- [Uses for Implicitly Unwrapped Optionals](http://www.drewag.me/posts/uses-for-implicitly-unwrapped-optionals-in-swift)
+- [Uses for Implicitly Unwrapped Optionals](/posts/2014/07/05/uses-for-implicitly-unwrapped-optionals-in-swift)
 
 ### Constants v.s. Variables
 
@@ -46,7 +46,7 @@ In Swift, there are two forms of types: [Value Types](https://developer.apple.co
 
 ### Generics
 
-If you are not familiar with Generics from another language like C++, it can be hard to wrap you head around this change form Objective-C. In Objective-C it is common to use containers that store very generic types like `id`. Swift [makes these containers safer using generics](http://www.drewag.me/posts/7-cool-features-in-swift#keeps-your-collections-safe-and-clear).
+If you are not familiar with Generics from another language like C++, it can be hard to wrap you head around this change form Objective-C. In Objective-C it is common to use containers that store very generic types like `id`. Swift [makes these containers safer using generics](/posts/2014/06/29/7-cool-features-in-swift#keeps-your-collections-safe-and-clear).
 
 - [Generics (Apple)]((https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-XID_232)
 
@@ -60,7 +60,7 @@ Follow Blogs
 
 There are a few really great blogs that have cropped up already:
 
-- [Drewag (This Blog)](http://drewag.me) - A shameless plug for this blog. I will not be writing exclusively about Swift, but I plan to concentrate pretty heavily on it
+- [Drewag (This Blog)](https://drewag.me) - A shameless plug for this blog. I will not be writing exclusively about Swift, but I plan to concentrate pretty heavily on it
 - [Erica Sadun](http://ericasadun.com) - Many great posts about Swift
 - [Practical Swift](http://practicalswift.com) - A blog dedicated to Swift
 

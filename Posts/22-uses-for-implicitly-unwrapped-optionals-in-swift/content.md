@@ -1,4 +1,4 @@
-Before I can describe the use cases for Implicitly Unwrapped Optionals, you should already understand what Optionals and Implicitly Unwrapped Optionals are in Swift. If you do not, I recommend you first read [my article on optionals](http://www.drewag.me/posts/what-is-an-optional-in-swift)
+Before I can describe the use cases for Implicitly Unwrapped Optionals, you should already understand what Optionals and Implicitly Unwrapped Optionals are in Swift. If you do not, I recommend you first read [my article on optionals](/posts/2014/07/05/what-is-an-optional-in-swift)
 
 <a name="when-to-use-an-implicitly-unwrapped-optional" href="#when-to-use-an-implicitly-unwrapped-optional">When To Use An Implicitly Unwrapped Optional</a>
 ------------------
