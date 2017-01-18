@@ -11,8 +11,8 @@ I love that you can extend structs in Swift. It can be really useful to add func
     extension CGRect {
         var center: CGPoint {
             return CGPoint(
-                x: self.origin.x + self.size.width / 2.0,
-                y: self.origin.y + self.size.height / 2.0
+                x: self.origin.x + self.size.width / 2,
+                y: self.origin.y + self.size.height / 2
             )
         }
     }
@@ -23,7 +23,7 @@ It can also be useful to extend literals. In ruby, there is a useful method on i
 
     // swift
     extension Int {
-        func repeat(block : () -> ()) {
+        func repeat(block: () -> ()) {
             for i in 0 ..&lt; self {
                 block()
             }
@@ -52,24 +52,24 @@ In Swift, the cases of an enumeration can hold values known as [Associated Value
             case post(String)
         }
 
-        var URL: String
+        var url: String
         var method: Method
     }
 
-    var getRequest = NetRequest(URL: "https://drewag.me", method: .get)
-    var postRequest = NetRequest(URL: "https://drewag.me", method: .post("{\"username\": \"drewag\"}"))
+    var getRequest = NetRequest(url: "https://drewag.me", method: .get)
+    var postRequest = NetRequest(url: "https://drewag.me", method: .post("{\"username\": \"drewag\"}"))
 
 A GET request does not have a request body but a POST request does. Instead of having a potentially unused member variable, you can define the content body of the POST to be directly in the `Method` enum.
 
-Possibly the best example of this is the `Optional` in Swift. The Swift compiler helps us with some syntactic sugar, but in reality when you define an optional `String` like this: `var myString : String?` the compiler actually translates it to `var myString : Optional<String>`. An `Optional` is defined as follows:
+Possibly the best example of this is the `Optional` in Swift. The Swift compiler helps us with some syntactic sugar, but in reality when you define an optional `String` like this: `var myString: String?` the compiler actually translates it to `var myString : Optional<String>`. An `Optional` is defined as follows:
 
     // swift
-    enum Optional<T> {
+    enum Optional<Wrapped> {
         case none
-        case some(T)
+        case some(Wrapped)
     }
 
-In the `None` case (`nil`), there is no actual value associated with it, but in the `Some` case, there is a concrete value associated with it. This is a really elegant way to express a variable that can lack a value without having pointers exposed in the language and without allowing all values to be nil.
+In the `none` case (`nil`), there is no actual value associated with it, but in the `some` case, there is a concrete value associated with it. This is a really elegant way to express a variable that can lack a value without having pointers exposed in the language and without allowing all values to be nil.
 
 3. <a name="keeps-your-collections-safe-and-clear" href="#keeps-your-collections-safe-and-clear">Keeps Your Collections Safe and Clear</a>
 ----------------
@@ -80,7 +80,7 @@ The following is a simple example of a situation where Generics can save time an
 
     // swift
     class Word {
-        enum partOfSpeech {
+        enum PartOfSpeech {
             case noun, pronoun, verb
         }
 
@@ -99,7 +99,7 @@ The following is a simple example of a situation where Generics can save time an
 
 Above I have defined a class `Word` that contains a String for the actual word and also a part of speech. Then I defined an array of words called `sentence`.
 
-If another programmer saw a variable called `sentence` defined as an array, I think it would be a pretty safe bet to assume that it is simply an array of strings. In Objective-C, this kind of misconception would not be caught until runtime because the compiler doesn’t know what type is supposed to go into the array, but in Swift, every array is defined as holding a specific type. In the example above, the compiler infers that the array is of type `Word[]`. If you wanted to be more explicitly you could write its definition like so: `var sentence : Word[] = …` but it isn’t necessary. Even without explicitly defining it as such, the compiler gives an error if you try to append a value to it that is not a `Word`. It also gives an error if you try to operate on the value as if it were a `String`.
+If another programmer saw a variable called `sentence` defined as an array, I think it would be a pretty safe bet to assume that it is simply an array of strings. In Objective-C, this kind of misconception would not be caught until runtime because the compiler doesn’t know what type is supposed to go into the array, but in Swift, every array is defined as holding a specific type. In the example above, the compiler infers that the array is of type `Word[]`. If you wanted to be more explicitly you could write its definition like so: `var sentence: Word[] = …` but it isn’t necessary. Even without explicitly defining it as such, the compiler gives an error if you try to append a value to it that is not a `Word`. It also gives an error if you try to operate on the value as if it were a `String`.
 
 This feature will make Swift APIs including collections much more easily understood and safer to operate with.
 
@@ -134,8 +134,8 @@ In Objective-C there were a lot of circumstances where I would override a proper
 In Swift, there is a built in mechanism to make performing actions immediately after or immediately before an assignment that removes the need for the boilerplate code. This feature is called [Property Observers](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/Properties.html#//apple_ref/doc/uid/TP40014097-CH14-XID_333). Basically you can define a `willSet` and / or a `didSet` method within a property that is automatically called at the appropriate time. `willSet` is provided a variable `newValue` and `didSet` is provided variable `oldValue`. An example of this is as follows:
 
     // swift
-    class MyView : UIView {
-        var aSubview : UIView {
+    class MyView: UIView {
+        var aSubview: UIView {
             didSet {
                 oldValue.removeFromSuperview()
                 self.addSubview(aSubview)
@@ -157,11 +157,11 @@ In this `MyView` class, whenever it is assigned a new `aSubview`, the old one is
 Memory management is still not completely automatic in Swift as it still uses [Automatic Reference Counting](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html), but they greatly improved the syntax. Instead of having to declare a `weak` or `unsafe_unretained` variable outside of the block, you can define how a closure should capture outside variables using [Capture Lists](https://developer.apple.com/library/prerelease/ios/documentation/swift/conceptual/swift_programming_language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_67). Here is an example for both `weak` and `unowned` in Swift:
 
     // swift
-    class FilePickerController : UIViewController {
-        var onDidPickFileWithPath : ((path : String) -> ())?
+    class FilePickerController: UIViewController {
+        var onDidPickFileWithPath: ((path: String) -> ())?
     }
 
-    class DocumentViewController : UIViewController {
+    class DocumentViewController: UIViewController {
         var filePicker: FilePickerController?
         var content: String?
 
