@@ -133,8 +133,8 @@ private extension StaticPagesGenerator {
         let xml = try "Views/sitemap.xml"
             .map(FileContents())
             .map(Template(build: { builder in
+                builder["domain"] = domain
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
-                    builder["domain"] = domain
                     builder["link"] = post.permanentRelativePath
                     builder["modified"] = post.metaInfo.modified.railsDate
                 })
@@ -157,9 +157,9 @@ private extension StaticPagesGenerator {
                     post.buildReference(to: builder)
                 }
 
+                builder["domain"] = domain
                 builder["mostRecentUpdated"] = posts.first?.metaInfo.modified.railsDateTime
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
-                    builder["domain"] = domain
                     builder["title"] = post.metaInfo.title
                     builder["permaLink"] = post.permanentRelativePath
                     builder["modified"] = post.metaInfo.modified.iso8601DateTime

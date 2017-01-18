@@ -24,7 +24,7 @@ struct FeaturesRouter: Router {
             return .handled(try request.response(
                 textFromFiles: [
                     "Generated/sitemap.xml",
-                    ],
+                ],
                 contentType: "text/xml",
                 textBuild: { builder in
                 }
