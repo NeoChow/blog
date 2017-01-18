@@ -3,7 +3,7 @@ Before I can describe the use cases for Implicitly Unwrapped Optionals, you shou
 <a name="when-to-use-an-implicitly-unwrapped-optional" href="#when-to-use-an-implicitly-unwrapped-optional">When To Use An Implicitly Unwrapped Optional</a>
 ------------------
 
-There are four main reasons that one would create an Implicitly Unwrapped Optional. All have to do with defining a variable that will never be accessed when `nil` because otherwise, the Swift compiler will always force you to explicitly unwrap an Optional.
+There are two main reasons that one would create an Implicitly Unwrapped Optional. All have to do with defining a variable that will never be accessed when `nil` because otherwise, the Swift compiler will always force you to explicitly unwrap an Optional.
 
 ### <a name="a-constant-that-cannot-be-defined-during-initialization" href="#a-constant-that-cannot-be-defined-during-initialization">1. A Constant That Cannot Be Defined During Initialization</a>
 
@@ -14,35 +14,27 @@ Using an Optional variable gets around this issue because an Optional is automat
 A great example of this is when a member variable cannot be initialized in a UIView subclass until the view is loaded:
 
     // swift
-    class MyView : UIView {
-        @IBOutlet var button : UIButton
-        var buttonOriginalWidth : CGFloat!
+    class MyView: UIView {
+        @IBOutlet var button: UIButton!
+        var buttonOriginalWidth: CGFloat!
 
         override func viewDidLoad() {
             self.buttonOriginalWidth = self.button.frame.size.width
         }
     }
 
-Here, you cannot calculate the original width of the button until the view loads, but you know that `viewDidLoad` will be called before any other method on the view (other than initialization). Instead of forcing the value to be explicitly unwrapped pointlessly all over your class, you can declare it as an Implicitly Unwrapped Optional.
+Here, we have two different implicitly unwrapped optionals. Xcode forces us to make IBOutlets optional because the
+cannot be set during initialization. Instead they are set while loding the view. You could use a normal optional
+but if the interface file is setup correctly, the value will never be nil. It can also be nice to have an interface
+crash on loading if you forget to connect an outlet instead of harder to debug behavior down the line.
+
+Also, you cannot calculate the original width of the button until the view loads, but you know that `viewDidLoad`
+will be called before any other method on the view (other than initialization). Instead of forcing the value to be
+explicitly unwrapped pointlessly all over your class, you can declare it as an Implicitly Unwrapped Optional.
 
 ### <a name="when-your-app-cannot-recover-from-nil" href="#when-your-app-cannot-recover-from-nil">2. When Your App Cannot Recover From a Variable Being `nil`</a>
 
 This should be extremely rare, but if your app could literally not continue to run if a variable is `nil` when accessed, it would be a waste of time to bother testing it for `nil`. Normally if you have a condition that must absolutely be true for your app to continue running, you would use an `assert`. An Implicitly Unwrapped Optional has an assert for nil built right into it.
-
-### <a name="nsobject-initializers" href="#nsobject-initializers">3. NSObject Initializers</a>
-
-Apple does have at least one strange case of Implicitly Unwrapped Optionals. Technically, all initializers from classes that inherit from `NSObject` return Implicitly UnwrappedOptionals. This is because initialization in Objective-C can return `nil`. That means, in some cases, that you will still want to be able to test the result of initialization for `nil`. A perfect example of this is with `UIImage` if the image does not exist:
-
-    // swift
-    var image : UIImage? = UIImage(named: "NonExistentImage")
-    if image.hasValue {
-        print("image exists")
-    }
-    else {
-        print("image does not exist")
-    }
-
-If you think there is a chance that your image does not exist and you can gracefully handle that scenario, you can declare the variable capturing the initialization explicitly as an Optional so that you can check it for `nil`. You could also use an Implicitly Unwrapped Optional here, but since you are planning to check it anyway, it is better to use a normal Optional.
 
 <a name="when-not-to-use-an-implicitly-unwrapped-optional" href="#when-not-to-use-an-implicitly-unwrapped-optional">When Not To Use An Implicitly Unwrapped Optional</a>
 ---------------
