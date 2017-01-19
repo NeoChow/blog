@@ -13,7 +13,8 @@
   outline:2px solid #176382;
   margin:0px;
   padding:0px;
-  vertical-align:middle;
+  margin-top:20px;
+  vertical-align:top;
 }
 
 .post #description {
@@ -21,8 +22,6 @@
   margin:0px;
   padding:0px;
   display:inline-block;
-  font-size:11pt;
-  vertical-align:middle;
 }
 
 .post h2, .post h3, .post p {
@@ -31,10 +30,7 @@
 
 .post #description h2, .post #description p {
   margin-left:20px;
-}
-
-.post h2, .post h3 {
-  font-size:14pt;
+  font-size:16pt;
 }
 
 .post .published {
@@ -50,7 +46,7 @@
 }
 
 .post p {
-  font-size:11pt;
+  font-size:14pt;
 }
 
 .post h3 {
