@@ -1,0 +1,9 @@
+{
+    "title": "Filling Holes in Swift on Linux",
+    "summary": "The hardest part of developing Server-Side Swift is the incomplete nature of Foundation including some pretty critical basic functionality. After I thought up this technique, the problems I ran into changed from mountains to mole hills.",
+    "published": "2017-01-18",
+    "author": "Andrew Wagner",
+    "image_height": 362,
+    "featured": true
+}
+
