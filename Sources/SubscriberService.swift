@@ -32,13 +32,13 @@ struct SubscriberService {
         let subscriber = Subscriber(email: email, unsubscribeToken: token)
         try self.connection.execute(subscriber.insert)
 
-        NotificationService().notify(type: "User Subscribed", message: "Hopefully this IS a pattern!")
+        NotificationService().notify(type: "User Subscribed", message: "Their email is: '\(subscriber.email)'. Hopefully this IS a pattern!")
     }
 
     func unsubscribe(_ subscriber: Subscriber) throws {
         try self.connection.execute(subscriber.delete)
 
-        NotificationService().notify(type: "User Unsubscribed", message: "Hopefully this is NOT a pattern!")
+        NotificationService().notify(type: "User Unsubscribed", message: "Their email was: \(subscriber.email)'. Hopefully this is NOT a pattern!")
     }
 
     func subscriber(withUnsubscribeToken token: String) throws -> Subscriber? {
