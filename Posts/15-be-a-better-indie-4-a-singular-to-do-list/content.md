@@ -1,4 +1,4 @@
-<div class="note">This is the fourth in a series<br/><a href="/posts/2014/01/19/10-ways-to-be-a-better-independent-developer">10 Ways to Be a Better Independent Developer</a>10 Ways to Be a Better Independent Developer</a></div>
+<div class="note">This is the fourth in a series<br/><a href="/posts/2014/01/19/10-ways-to-be-a-better-independent-developer">10 Ways to Be a Better Independent Developer</a></div>
 
 When I first went indie I tried to maintain different to-do lists for my personal life and various professional projects. I quickly discovered that this is not how indie life works. Once I went independent, everything mixed together and I didn’t have dedicated work time and dedicated personal time. This meant that having multiple to-do lists was not effective for me; a single to-do list for everything in my life was much more effective because it better aligned with how I actually go through my day.
 
