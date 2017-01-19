@@ -3,3 +3,4 @@ Sitemap: http://drewag.me/sitemap.xml
 User-agent: *
 Disallow: /preview
 Disallow: /subscribers/unsubscribe
+Disallow: /donate/new
