@@ -1,7 +1,7 @@
 <!-- Header -->
 
 <h1 style="max-width:700px;text-align:center;font-family:'Georgia',serif;font-size:20pt;padding-bottom:0.1em;border-bottom:solid 1px #176382;margin-bottom:5px;color:#176382">
-  <a href="{{domain}}" style="text-decoration:none;color:inherit">{{title}}</a>
+  <a href="{{domain}}{{link}}?utm_medium=email&utm_campain=NewPostNotification&utm_source=subscribers&utm_term=title" style="text-decoration:none;color:inherit">{{title}}</a>
 </h1>
 <p style="max-width:700px;text-align:center;color:#585858;margin-bottom:0.2em;margin-top:0;font-size:10pt;font-family:'Verdana',sans-serif">
   <time>Published on {{published}}</time>
@@ -15,7 +15,7 @@
 <p style="text-align:left;max-width:700px;font-family:'Verdana',sans-serif;color:#111;font-size:12pt">{{summary}}</p>
 
 <p style="margin-top:10px">
-  <a href="{{domain}}{{link}}" style="color:#176382;font-size:12pt">Read More</a>
+  <a href="{{domain}}{{link}}?utm_medium=email&utm_campain=NewPostNotification&utm_source=subscribers&utm_term=readmore" style="color:#176382;font-size:12pt">Read More</a>
 </p>
 
 <!-- Footer -->
@@ -23,13 +23,13 @@
 <hr style="max-width:700px" align="left"/>
 
 <p style="max-width:700px;font-family:'Verdana',sans-serif;color:#666;">
-  This post has recently been published on my <a style="color:#176382" href="{{domain}}">drewag.me</a> blog.
+  This post has recently been published on my <a style="color:#176382" href="{{domain}}?utm_medium=email&utm_campain=NewPostNotification&utm_source=subscribers&utm_term=note">drewag.me</a> blog.
   You received this notification because you subscribed on my website. If this was a mistake or you would like to stop
   the notifications please click the unsubscribe link at the bottom of this email.
 </p>
 
 <p style="text-align:center;max-width:700px">
-  <a href="{{domain}}"><img src="{{domain}}/assets/img/logo.png" style="margin-bottom:10px"/></a>
+  <a href="{{domain}}?utm_medium=email&utm_campain=NewPostNotification&utm_source=subscribers&utm_term=footer"><img src="{{domain}}/assets/img/logo.png" style="margin-bottom:10px"/></a>
   <br />
   <a href="{{domain}}/subscribers/unsubscribe?token={{unsubscribeToken}}" style="color:#999;font-size:10pt;margin-top:20px">Unsubscribe</a>
 </p>
