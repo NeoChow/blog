@@ -44,6 +44,7 @@ class PreviewPostRouter: PostRouter, ParameterizedRouter {
                     "Views/footer.html",
                 ],
                 htmlBuild: { builder in
+                    builder["title"] = post.metaInfo.title
                     builder.buildValues(forKey: "stylesheets", withArray: [
                         "/assets/css/post.css",
                         "/assets/css/prismjs.css",
@@ -74,7 +75,7 @@ class PublishedPostRouter: PostRouter, ParameterizedRouter {
             let day = param.0.1 < 10 ? "0\(param.0.1)" : "\(param.0.1)"
             let relativePath = "\(param.0.0.0)/\(month)/\(day)/\(param.1)"
             let localURL = URL(fileURLWithPath: self.baseLocalPath).appendingPathComponent(relativePath)
-            guard let _ = Post(directoryUrl: localURL) else {
+            guard let post = Post(directoryUrl: localURL) else {
                 return .unhandled
             }
             return .handled(try request.response(
@@ -84,6 +85,7 @@ class PublishedPostRouter: PostRouter, ParameterizedRouter {
                     "Views/footer.html",
                 ],
                 htmlBuild: { builder in
+                    builder["title"] = post.metaInfo.title
                     builder.buildValues(forKey: "stylesheets", withArray: [
                         "/assets/css/post.css",
                         "/assets/css/prismjs.css",
