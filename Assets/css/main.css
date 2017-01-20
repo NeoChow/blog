@@ -166,7 +166,20 @@ img {
 }
 
 @media all and (max-width:600px) {
-        padding-left:4px;
-        padding-right:4px;
-    }
+  .centered-content {
+    padding-left:10px;
+    padding-right:10px;
+  }
+}
+
+@media all and (max-width:400px) {
+  #top-bar #donate {
+    display:none;
+  }
+
+  #top-bar #logo {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+  }
 }
