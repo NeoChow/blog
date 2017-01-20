@@ -21,11 +21,12 @@
   vertical-align:top;
 }
 
+
 .post #description {
-  width:70%;
   margin:0px;
   padding:0px;
   display:inline-block;
+  width:70%;
 }
 
 .post h2, .post h3, .post p {
@@ -53,9 +54,29 @@
 }
 
 .post p {
-    font-size:13pt;
+  font-size:13pt;
 }
 
 .post h3 {
   margin-top:2em;
+}
+
+
+@media all and (max-width:600px) {
+    .post img {
+        width:100%;
+    }
+    .post #description {
+        width:100%;
+    }
+
+    .post #description h2, .post #description p {
+        margin-left:4px;
+        margin-right:4px;
+    }
+
+    #content .post h2 {
+        margin-top:1em;
+        padding-top:0;
+    }
 }

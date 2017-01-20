@@ -15,27 +15,27 @@ body, html {
 }
 
 #top-bar {
-  height:43px;
+  height:66px;
   width:100%;
   background:url('/assets/img/top-bar-background.jpg');
-  background-size:1px 43px;
+  background-size:1px 66px;
   background-repeat:horizontal;
   text-align:left;
 }
 
 #top-bar #logo {
-  width:447px;
-  height:43px;
+  width:292px;
+  height:66px;
   background:url('/assets/img/top-bar-icon.jpg');
-  background-size:447px 43px;
+  background-size:292px 66px;
   display:inline-block;
 }
 
 #top-bar #donate {
     text-decoration:none;
-    line-height:20px;
-    height:20px;
-    margin-top:5px;
+    line-height:24px;
+    height:23px;
+    margin-top:10px;
     display:inline-block;
     float:right;
     color:white;
@@ -56,6 +56,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom:1em;
   border-bottom:solid 1px #004581;
   color: #004581;
+}
+
+#content h1:first-child {
+    margin-top:2em;
 }
 
 #content h2 {
@@ -88,7 +92,6 @@ a:hover {
 }
 
 #footer {
-  width:100%;
   clear:both;
   text-align:center;
   padding:10px;
@@ -112,7 +115,7 @@ a:hover {
 
 #footer form {
   background-color:#eee;
-  width:320px;
+  max-width:320px;
   margin:1em auto;
   padding:1em;
   border-radius: 15px;
@@ -140,6 +143,10 @@ a:hover {
     display:inline-block;
 }
 
+#footer form #subscriber_email {
+    width:90%;
+}
+
 form input {
   font-size:12pt;
   padding:0.5em;
@@ -156,4 +163,10 @@ form input[type="submit"] {
 
 img {
   outline:2px solid #004581;
+}
+
+@media all and (max-width:600px) {
+        padding-left:4px;
+        padding-right:4px;
+    }
 }
