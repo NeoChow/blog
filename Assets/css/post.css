@@ -81,6 +81,12 @@ article .note {
 
 @media all and (max-width:600px) {
     article pre code {
-        font-size:10pt;
+        font-size:9pt;
+    }
+}
+
+@media all and (max-width:400px) {
+    article pre code {
+        font-size:9pt;
     }
 }

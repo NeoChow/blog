@@ -17,8 +17,8 @@
   outline:2px solid #004581;
   margin:0px;
   padding:0px;
-  margin-top:44px;
   vertical-align:top;
+  margin-top:16px;
 }
 
 
@@ -27,6 +27,7 @@
   padding:0px;
   display:inline-block;
   width:70%;
+  margin-top:16px;
 }
 
 .post h2, .post h3, .post p {
@@ -39,6 +40,7 @@
 
 .post #description h2, .post #description p {
   margin-left:20px;
+  margin-top:0;
 }
 
 .post .published {
@@ -66,8 +68,18 @@
     .post img {
         width:100%;
     }
+
+    .post p {
+      font-size:11pt;
+    }
+
+    .post #description h2, .post #description h3 {
+      font-size:13pt;
+    }
+
     .post #description {
         width:100%;
+        margin-top:0;
     }
 
     .post #description h2, .post #description p {

@@ -165,11 +165,22 @@ img {
   outline:2px solid #004581;
 }
 
+@media all and (max-width:700px) {
+  body, html {
+    font-size:12pt;
+  }
+}
+
 @media all and (max-width:600px) {
   .centered-content {
     padding-left:10px;
     padding-right:10px;
   }
+
+  body, html {
+    font-size:11pt;
+  }
+
 }
 
 @media all and (max-width:400px) {
