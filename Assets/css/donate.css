@@ -3,7 +3,7 @@ form#donate {
     display:block;
     margin-left:auto;
     margin-right:auto;
-    background-color:#176382;
+    background-color:#004581;
     border:thin solid #124f68;
     border-radius:10px;
     padding:1em;
@@ -24,7 +24,7 @@ form#donate a {
 form#donate a, form#donate input {
     border:thin solid #1f87b1;
     cursor:pointer;
-    color:#176382;
+    color:#004581;
     padding:0.3em;
 }
 
@@ -44,7 +44,7 @@ form#donate input[type="submit"] {
     width:100px;
     font-size:14pt;
     background-color:white;
-    color:#176382;
+    color:#004581;
     margin-left:0.5em;
 }
 
