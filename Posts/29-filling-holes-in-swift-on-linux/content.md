@@ -101,9 +101,10 @@ dates with `date`, and more. I even use it for something that Foundation does no
 because I already know how to do these things from the command line and, even if I don't, there are a ton of resources online describing how to do so.
 
 **Warning:** Just like with SQL you need to be very careful to not allow attackers to inject their own bash code into your calls. For example, if your call is
-`mkdir 'fielpath'` someone could manipulate the file path to be `some/path'; rm -rf /' to delete your entire file directory. You need to sanatize your input to not allow
-this kind of attack by escaping all single quotes in the call. You should also ensure you are running your program with minimum permissions. Finally, you should avoid using
-this technique in a place that can even be manipulated by the user in the first place.
+`mkdir 'filepath'` someone could manipulate the file path to be `some/path'; rm -rf /'` to delete your entire file directory. You need to sanatize your input to not allow
+this kind of attack by escaping all single quotes in the call. There are also many other ways someone might be able to manipulate your call including using bash variables
+like `$HOME` or use tick marks (`) to execute arbitrary commands. Bottom line, if you are using this on a high value target, you should be careful and you should also ensure
+you are running your program with minimum permissions. Finally, you should avoid using this technique in a place that can even be manipulated by the user in the first place.
 
 The Future
 -------------
