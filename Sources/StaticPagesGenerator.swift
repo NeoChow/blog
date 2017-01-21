@@ -17,6 +17,7 @@ class StaticPagesGenerator {
     func generateReturningNewPosts(forDomain domain: String) throws -> [Post] {
         self.removeDirectory(at: "Generated-working")
         self.createDirectory(at: "Generated-working")
+        try self.generateSiteDownPage()
         try self.generateIndex()
         try self.generatePosts()
         try self.generateArchive()
@@ -53,6 +54,23 @@ private extension StaticPagesGenerator {
 
     func copyFile(from: String, to: String) throws {
         try self.fileService.copyItem(from: URL(fileURLWithPath: from), to: URL(fileURLWithPath: to))
+    }
+
+    func generateSiteDownPage() throws {
+        print("Generating site down page...", terminator: "")
+        let html = try ["Views/header.html", "Views/static-site-down.html"]
+            .map(FileContents())
+            .reduce(Separator())
+            .map(Template(build: { builder in
+                builder["title"] = "Site Down"
+                builder.buildValues(forKey: "styles", withArray: ["Assets/css/main.css"], build: { file, builder in
+                    builder["content"] = ((try? file.map(FileContents()).string()) ?? "") + "#donate {display:none !important}"
+                })
+            }))
+            .string()
+
+        try self.write(html, to: "Generated-working/site-down.html")
+        print("done")
     }
 
     func generateIndex() throws {

@@ -6,6 +6,9 @@
     {{repeat stylesheets}}
         <link href="{{link}}" media="all" rel="stylesheet" type="text/css" />
     {{end}}
+    {{repeat styles}}
+        <style>{{content}}</style>
+    {{end}}
     {{repeat scripts}}
         <script src="{{link}}" type="text/javascript"></script>
     {{end}}
@@ -30,7 +33,7 @@
 <div id="top-bar">
   <div class="centered-content">
     <a id="logo" href="/"></a>
-    <a id="donate" href="/donate">Donate</a>
+    <a id="donate" href="/donate" style="color:red">Donate</a>
   </div>
 </div>
 <div id="main">
