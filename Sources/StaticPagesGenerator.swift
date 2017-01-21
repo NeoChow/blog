@@ -183,7 +183,7 @@ private extension StaticPagesGenerator {
                     builder["modified"] = post.metaInfo.modified.iso8601DateTime
                     builder["description"] = post.metaInfo.summary
                     builder["publishedYear"] = post.metaInfo.published.year
-                    builder["content"] = post.html
+                    builder["content"] = post.html.data(using: .utf8)?.base64EncodedString()
                     builder["summary"] = post.metaInfo.summary
                 })
             }))

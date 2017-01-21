@@ -15,7 +15,7 @@
         <summary>{{summary}}</summary>
         <author><name>Andrew Wagner</name></author>
         <rights>© {{publishedYear}} Andrew Wagner</rights>
-        <content type="application/xhtml+html" src="{{domain}}{{permaLink}}"></content>
+        <content>{{summary}}</content>
     </entry>
     {{end}}
 </feed>
