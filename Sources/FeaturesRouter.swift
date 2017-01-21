@@ -35,7 +35,7 @@ struct FeaturesRouter: Router {
                 textFromFiles: [
                     "Generated/feed.xml",
                     ],
-                contentType: "text/xml",
+                contentType: "application/atom+xml",
                 textBuild: { builder in
                 }
             ))
