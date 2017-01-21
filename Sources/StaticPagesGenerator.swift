@@ -176,15 +176,15 @@ private extension StaticPagesGenerator {
                 }
 
                 builder["domain"] = domain
-                builder["mostRecentUpdated"] = posts.first?.metaInfo.modified.railsDateTime
+                builder["mostRecentUpdated"] = posts.first?.metaInfo.modified.iso8601DateTime
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
                     builder["title"] = post.metaInfo.title
                     builder["permaLink"] = post.permanentRelativePath
                     builder["modified"] = post.metaInfo.modified.iso8601DateTime
                     builder["description"] = post.metaInfo.summary
                     builder["publishedYear"] = post.metaInfo.published.year
-                    builder["modified"] = post.metaInfo.modified.railsDate
                     builder["content"] = post.html
+                    builder["summary"] = post.metaInfo.summary
                 })
             }))
             .string()
