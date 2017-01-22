@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <link href="{{domain}}/feed" rel="self" />
+    <icon>{{domain}}/favicon-32x32.png</icon>
+    <logo>{{domain}}/favicon-32x32.png</logo>
     <title type="text">Drewag's Blog</title>
     <subtitle type="text">programming, user experience, and more</subtitle>
     <updated>{{mostRecentUpdated}}</updated>
