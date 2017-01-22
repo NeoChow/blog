@@ -9,6 +9,7 @@ var StripePrivateKey = ""
 
 struct MainRouter: Router {
     public var routes: [Route] = [
+        .get(router: FaviconRouter()),
         .get("google85833a31c04058e9.html", handler: { request in
             return .handled(try request.response(withFileAt: "Views/google-webmaster-tools-verification.html", status: .ok))
         }),
