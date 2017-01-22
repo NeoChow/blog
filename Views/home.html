@@ -19,10 +19,10 @@
 <h1>Featured Posts</h1>
 {{ repeat featured }}
 <div class="post">
-  <a href="{{link}}"><img src="{{imageLink}}" /></a>
+  <a href="{{link}}"><img src="{{imageLink}}" alt/></a>
   <div id="description">
     <h2><a href="{{link}}">{{title}}</a></h2>
-    <p class="published"><time>{{published}}</time></p>
+    <p class="published">{{published}}</p>
     <p>{{summary}}</p>
   </div>
 </div>
@@ -32,7 +32,7 @@
 {{ repeat recent }}
 <div class="post">
   <h3><a href="{{link}}">{{title}}</a></h3>
-  <p class="published"><time>{{published}}</time></p>
+  <p class="published">{{published}}</p>
   <p>{{summary}}</p>
 </div>
 {{ end }}
