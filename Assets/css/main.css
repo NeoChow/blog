@@ -31,15 +31,15 @@ body, html {
   display:inline-block;
 }
 
-#top-bar #donate {
+#top-bar #about {
     text-decoration:none;
     line-height:24px;
     height:23px;
-    margin-top:10px;
+    margin-top:11px;
     display:inline-block;
     float:right;
-    color:white;
-    border:thin solid white;
+    color:#EEE;
+    border:thin solid #EEE;
     padding:0.2em;
     border-radius:0.4em;
 }
