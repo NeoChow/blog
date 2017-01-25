@@ -1,8 +1,9 @@
 {
-    "title": "Changes at a Glance",
-    "summary": "A system to make version control change sets more understandable at a glance.",
-    "published": "2013-10-06",
-    "author": "Andrew Wagner",
-    "image_height": 328,
-    "featured": false
+  "summary" : "A system to make version control change sets more understandable at a glance.",
+  "published" : "2013-10-06T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 328,
+  "title" : "Changes at a Glance",
+  "author" : "Andrew Wagner"
 }

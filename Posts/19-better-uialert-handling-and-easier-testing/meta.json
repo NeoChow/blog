@@ -1,8 +1,9 @@
 {
-    "title": "Better UIAlert Handling and Easier Testing",
-    "summary": "A more declarative and testable way to display alerts in iOS.",
-    "published": "2014-03-31",
-    "author": "Andrew Wagner",
-    "image_height": 331,
-    "featured": false
+  "summary" : "A more declarative and testable way to display alerts in iOS.",
+  "published" : "2014-03-31T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 331,
+  "title" : "Better UIAlert Handling and Easier Testing",
+  "author" : "Andrew Wagner"
 }

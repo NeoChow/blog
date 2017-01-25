@@ -1,8 +1,9 @@
 {
-    "title": "Testing Asynchronous Code in Objective-C",
-    "summary": "Testing asynchronous code in Objective-C can be a real pain unless you make one simple change to the way you program it in the first place.",
-    "published": "2014-03-31",
-    "author": "Andrew Wagner",
-    "image_height": 231,
-    "featured": false
+  "summary" : "Testing asynchronous code in Objective-C can be a real pain unless you make one simple change to the way you program it in the first place.",
+  "published" : "2014-03-31T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 231,
+  "title" : "Testing Asynchronous Code in Objective-C",
+  "author" : "Andrew Wagner"
 }

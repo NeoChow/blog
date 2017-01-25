@@ -10,23 +10,36 @@ import Foundation
 import TextTransformers
 
 extension Post {
-    func buildContent(to builder: TemplateBuilder, atUrl baseUrl: URL) {
+    func buildPreviewContent(to builder: TemplateBuilder, atUrl baseUrl: URL) {
         builder["title"] = self.metaInfo.title
-        builder["permaLink"] = self.permanentRelativePath
-        builder["published"] = self.metaInfo.published.date
-        builder["isoPublished"] = self.metaInfo.published.iso8601DateTime
-        builder["isoModified"] = self.metaInfo.modified.iso8601DateTime
+        builder["published"] = self.metaInfo.published?.date ?? "Unpublished"
+        builder["isoPublished"] = self.metaInfo.published?.iso8601DateTime ?? "Unpublished"
+        builder["isoModified"] = self.metaInfo.modified?.iso8601DateTime ?? "Unpublished"
         builder["summary"] = self.metaInfo.summary
         builder["imageUrl"] = baseUrl.appendingPathComponent("photo.jpg").relativePath
         builder["content"] = self.html
         builder["imageHeight"] = "\(self.metaInfo.imageHeight)"
     }
 
-    func buildReference(to builder: TemplateBuilder, link: String? = nil) {
+
+    func buildPreviewReference(to builder: TemplateBuilder) {
         builder["title"] = self.metaInfo.title
-        builder["published"] = self.metaInfo.published.date
+        builder["published"] = self.metaInfo.published?.date ?? "Unpublished"
         builder["summary"] = self.metaInfo.summary
+        builder["imageLink"] = "preview/" + self.directoryUrl.lastPathComponent + "/photo.jpg"
+        builder["link"] = "preview/" + self.directoryUrl.lastPathComponent
+    }
+}
+
+extension PublishedPost {
+    func buildPublishedContent(to builder: TemplateBuilder, atUrl baseUrl: URL) {
+        self.buildPreviewContent(to: builder, atUrl: baseUrl)
+        builder["permaLink"] = self.permanentRelativePath
+    }
+
+    func buildPublishedReference(to builder: TemplateBuilder) {
+        self.buildPreviewReference(to: builder)
         builder["imageLink"] = self.permanentRelativeImagePath
-        builder["link"] = link ?? self.permanentRelativePath
+        builder["link"] = self.permanentRelativePath
     }
 }

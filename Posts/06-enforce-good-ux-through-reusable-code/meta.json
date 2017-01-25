@@ -1,8 +1,9 @@
 {
-    "title": "Enforce Good UX Through Reusable Code",
-    "summary": "My theory on how user experience's and code architecture's interests can converge. Good UX can encourage good code reuse and code reuse can encourage effective UX.",
-    "published": "2013-02-17",
-    "author": "Andrew Wagner",
-    "image_height": 394,
-    "featured": false
+  "summary" : "My theory on how user experience's and code architecture's interests can converge. Good UX can encourage good code reuse and code reuse can encourage effective UX.",
+  "published" : "2013-02-17T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 394,
+  "title" : "Enforce Good UX Through Reusable Code",
+  "author" : "Andrew Wagner"
 }

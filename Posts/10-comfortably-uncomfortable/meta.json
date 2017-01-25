@@ -1,8 +1,9 @@
 {
-    "title": "Comfortably Uncomfortable",
-    "summary": "A look at how pushing through discomfort is exactly where I want to be.",
-    "published": "2013-10-31",
-    "author": "Andrew Wagner",
-    "image_height": 594,
-    "featured": false
+  "summary" : "A look at how pushing through discomfort is exactly where I want to be.",
+  "published" : "2013-10-31T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 594,
+  "title" : "Comfortably Uncomfortable",
+  "author" : "Andrew Wagner"
 }

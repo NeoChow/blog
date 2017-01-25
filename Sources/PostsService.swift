@@ -13,7 +13,7 @@ import TextTransformers
 struct PostsService {
     private var allPosts: [Post]?
 
-    typealias MonthDict = OrderedDictionary<String, [Post]>
+    typealias MonthDict = OrderedDictionary<String, [PublishedPost]>
     typealias YearDict = OrderedDictionary<String, MonthDict>
     typealias AllDict = OrderedDictionary<String, YearDict>
 
@@ -25,18 +25,33 @@ struct PostsService {
         let url = URL(fileURLWithPath: "Posts")
         let posts = FileService.default.contentsOfDirectory(at: url, skipHiddenFiles: true)
             .map({Post(directoryUrl: $0)!})
-            .sorted(by: {$0.metaInfo.published.timeIntervalSince($1.metaInfo.published) > 0})
+            .sorted(by: {($0.metaInfo.published ?? Date.distantFuture).timeIntervalSince($1.metaInfo.published ?? Date.distantFuture) > 0})
         self.allPosts = posts
         return posts
+    }
+
+    mutating func loadAllPublishedPosts() throws -> [PublishedPost] {
+        return try self.loadAllPosts()
+            .filter({$0.metaInfo.published != nil})
+            .map({PublishedPost(post: $0, published: $0.metaInfo.published!)})
+    }
+
+    mutating func loadAllUnpublishedPosts() throws -> [Post] {
+        return try self.loadAllPosts().filter({$0.metaInfo.published == nil})
+    }
+
+    mutating func loadAllUnnotifiedPosts() throws -> [PublishedPost] {
+        return try self.loadAllPublishedPosts()
+            .filter({$0.metaInfo.notified == nil})
     }
 
     mutating func loadOrganizedPosts() throws -> AllDict {
         var organized = AllDict()
 
-        for post in try self.loadAllPosts() {
-            let yearString = post.metaInfo.publishedYearString
-            let monthString = post.metaInfo.publishedMonthString
-            let dayString = post.metaInfo.publishedDayString
+        for post in try self.loadAllPublishedPosts() {
+            let yearString = post.publishedYearString
+            let monthString = post.publishedMonthString
+            let dayString = post.publishedDayString
 
             var yearDict = organized[yearString] ?? YearDict()
             var monthDict = yearDict[monthString] ?? MonthDict()
@@ -50,11 +65,11 @@ struct PostsService {
         return organized
     }
 
-    mutating func loadMainPosts() throws -> (featured: [Post], recent: [Post]) {
-        var featured = [Post]()
-        var recent = [Post]()
+    mutating func loadMainPosts() throws -> (featured: [PublishedPost], recent: [PublishedPost]) {
+        var featured = [PublishedPost]()
+        var recent = [PublishedPost]()
 
-        for post in try self.loadAllPosts() {
+        for post in try self.loadAllPublishedPosts() {
             if post.metaInfo.isFeatured {
                 featured.append(post)
             }

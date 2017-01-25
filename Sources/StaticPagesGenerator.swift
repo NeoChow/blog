@@ -14,7 +14,7 @@ class StaticPagesGenerator {
     var postsService = PostsService()
     let fileService = FileService.default
 
-    func generateReturningNewPosts(forDomain domain: String) throws -> [Post] {
+    func generate(forDomain domain: String) throws {
         self.removeDirectory(at: "Generated-working")
         self.createDirectory(at: "Generated-working")
         try self.generateSiteDownPage()
@@ -24,14 +24,10 @@ class StaticPagesGenerator {
         try self.generateSitemap(forDomain: domain)
         try self.generateAtomFeed(forDomain: domain)
 
-        let newPosts = try self.checkForNewPosts()
-
         print("Replacing production version...", terminator: "")
         self.removeDirectory(at: "Generated")
         try self.moveItem(from: "Generated-working", to: "Generated")
         print("done")
-
-        return newPosts
     }
 }
 
@@ -79,8 +75,8 @@ private extension StaticPagesGenerator {
         let html = try "Views/home.html"
             .map(FileContents())
             .map(Template(build: { builder in
-                func buildPost(post: Post, builder: TemplateBuilder) {
-                    post.buildReference(to: builder)
+                func buildPost(post: PublishedPost, builder: TemplateBuilder) {
+                    post.buildPublishedReference(to: builder)
                 }
 
                 builder.buildValues(forKey: "featured", withArray: featured, build: buildPost)
@@ -93,12 +89,12 @@ private extension StaticPagesGenerator {
     }
 
     func generatePosts() throws {
-        for post in try self.postsService.loadAllPosts() {
+        for post in try self.postsService.loadAllPublishedPosts() {
             try self.generate(post: post)
         }
     }
 
-    func generate(post: Post) throws {
+    func generate(post: PublishedPost) throws {
         print("Generating \(post.metaInfo.title)...", terminator: "")
 
         let relativePath = post.permanentRelativePath
@@ -106,7 +102,7 @@ private extension StaticPagesGenerator {
         let html = try "Views/post.html"
             .map(FileContents())
             .map(Template(build: { builder in
-                post.buildContent(to: builder, atUrl: URL(fileURLWithPath: relativePath))
+                post.buildPublishedContent(to: builder, atUrl: URL(fileURLWithPath: relativePath))
             }))
             .string()
 
@@ -147,14 +143,14 @@ private extension StaticPagesGenerator {
     func generateSitemap(forDomain domain: String) throws {
         print("Generating sitemap...", terminator: "")
 
-        let posts = try self.postsService.loadAllPosts()
+        let posts = try self.postsService.loadAllPublishedPosts()
         let xml = try "Views/sitemap.xml"
             .map(FileContents())
             .map(Template(build: { builder in
                 builder["domain"] = domain
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
                     builder["link"] = post.permanentRelativePath
-                    builder["modified"] = post.metaInfo.modified.railsDate
+                    builder["modified"] = post.modified.railsDate
                 })
             }))
             .string()
@@ -167,22 +163,22 @@ private extension StaticPagesGenerator {
     func generateAtomFeed(forDomain domain: String) throws {
         print("Generating atom feed...", terminator: "")
 
-        let posts = try self.postsService.loadAllPosts()
+        let posts = try self.postsService.loadAllPublishedPosts()
         let xml = try "Views/feed.xml"
             .map(FileContents())
             .map(Template(build: { builder in
-                func buildPost(post: Post, builder: TemplateBuilder) {
-                    post.buildReference(to: builder)
+                func buildPost(post: PublishedPost, builder: TemplateBuilder) {
+                    post.buildPublishedReference(to: builder)
                 }
 
                 builder["domain"] = domain
-                builder["mostRecentUpdated"] = posts.first?.metaInfo.modified.iso8601DateTime
+                builder["mostRecentUpdated"] = posts.first?.modified.iso8601DateTime
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
                     builder["title"] = post.metaInfo.title
                     builder["permaLink"] = post.permanentRelativePath
-                    builder["modified"] = post.metaInfo.modified.iso8601DateTime
+                    builder["modified"] = post.modified.iso8601DateTime
                     builder["description"] = post.metaInfo.summary
-                    builder["publishedYear"] = post.metaInfo.published.year
+                    builder["publishedYear"] = post.published.year
                     builder["content"] = post.html.data(using: .utf8)?.base64EncodedString()
                     builder["summary"] = post.metaInfo.summary
                 })
@@ -194,14 +190,14 @@ private extension StaticPagesGenerator {
         print("done")
     }
 
-    func build(day: String, month: String, year: String, posts: [Post]) -> (_ builder: TemplateBuilder) -> () {
+    func build(day: String, month: String, year: String, posts: [PublishedPost]) -> (_ builder: TemplateBuilder) -> () {
         return { builder in
-            func buildPost(post: Post, builder: TemplateBuilder) {
+            func buildPost(post: PublishedPost, builder: TemplateBuilder) {
                 builder["dayLink"] = "/posts/\(year)/\(month)/\(day)"
-                post.buildReference(to: builder)
+                post.buildPublishedReference(to: builder)
             }
 
-            builder["day"] = posts.first?.metaInfo.published.date
+            builder["day"] = posts.first?.published.date
             builder["dayLink"] = "/posts/\(year)/\(month)/\(day)"
             builder.buildValues(forKey: "posts", withArray: posts, build: buildPost)
         }
@@ -209,7 +205,7 @@ private extension StaticPagesGenerator {
 
     func build(month: String, year: String, posts: PostsService.MonthDict) -> (_ builder: TemplateBuilder) -> () {
         return { builder in
-            builder["month"] = posts.values.first?.first?.metaInfo.published.month
+            builder["month"] = posts.values.first?.first?.published.month
             builder["monthLink"] = "/posts/\(year)/\(month)"
             builder.buildValues(forKey: "posts", withArray: posts.keysAndValues, build: { (params, builder) in
                 self.build(day: params.0, month: month, year: year, posts: params.1)(builder)
@@ -235,7 +231,7 @@ private extension StaticPagesGenerator {
         }
     }
 
-    func generateArchive(forDay day: String, month: String, year: String, with array: [Post]) throws {
+    func generateArchive(forDay day: String, month: String, year: String, with array: [PublishedPost]) throws {
         print("Generating achive for \(year)/\(month)/\(day)...", terminator: "")
 
         let html = try "Views/day-archive.html"
@@ -281,20 +277,5 @@ private extension StaticPagesGenerator {
         try self.write(html, to: "Generated-working/posts/archive.html")
 
         print("done")
-    }
-
-    func checkForNewPosts() throws -> [Post] {
-        var newPosts = [Post]()
-        print("Checking for new posts...", terminator: "")
-
-        for post in try self.postsService.loadAllPosts() {
-            let directory = "Generated\(post.permanentRelativePath)"
-            if !self.fileService.fileExists(at: URL(fileURLWithPath: directory)) {
-                newPosts.append(post)
-            }
-        }
-
-        print("done")
-        return newPosts
     }
 }

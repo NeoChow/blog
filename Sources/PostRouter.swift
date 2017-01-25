@@ -52,7 +52,7 @@ class PreviewPostRouter: PostRouter, ParameterizedRouter {
                     builder.buildValues(forKey: "scripts", withArray: [
                         "/assets/js/prismjs.js",
                     ], build: {$1["link"] = $0})
-                    post.buildContent(to: builder, atUrl: request.endpoint)
+                    post.buildPreviewContent(to: builder, atUrl: request.endpoint)
                 }
             ))
         }),

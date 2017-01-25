@@ -16,58 +16,13 @@ class Post {
     struct MetaInfo {
         let title: String
         let summary: String
-        let published: Date
-        let modified: Date
         let author: String
         let isFeatured: Bool
         let imageHeight: Int
 
-        var publishedYearString: String {
-            let calendar = Calendar.current
-            let units = Set<Calendar.Component>([.year])
-            let components = calendar.dateComponents(units, from: self.published)
-            return "\(components.year!)"
-        }
-
-        var publishedMonthString: String {
-            let calendar = Calendar.current
-            let units = Set<Calendar.Component>([.month])
-            let components = calendar.dateComponents(units, from: self.published)
-            return components.month! < 10 ? "0\(components.month!)" : "\(components.month!)"
-        }
-
-        var publishedDayString: String {
-            let calendar = Calendar.current
-            let units = Set<Calendar.Component>([.day])
-            let components = calendar.dateComponents(units, from: self.published)
-            return components.day! < 10 ? "0\(components.day!)" : "\(components.day!)"
-        }
-
-        /*var normalizedTitle: String {
-            var output = ""
-            var lastCharacterWasValid = true
-            for character in self.title.lowercased().characters {
-                guard character != "'" && character != "’" else {
-                    continue
-                }
-
-                let scalars = "\(character)".unicodeScalars
-                guard scalars.count == 1 else {
-                    continue
-                }
-
-                guard CharacterSet.alphanumerics.contains(scalars.first!) else {
-                    lastCharacterWasValid = false
-                    continue
-                }
-                if !lastCharacterWasValid {
-                    output.append("-")
-                }
-                output.append("\(character)")
-                lastCharacterWasValid = true
-            }
-            return output
-        }*/
+        var published: Date?
+        var notified: Date?
+        var modified: Date?
     }
 
     lazy var metaInfo: MetaInfo = {
@@ -104,12 +59,14 @@ class Post {
         return self.directoryUrl.appendingPathComponent("meta.json")
     }
 
-    var permanentRelativePath: String {
-        return "/posts/\(self.metaInfo.publishedYearString)/\(self.metaInfo.publishedMonthString)/\(self.metaInfo.publishedDayString)/\(self.urlTitle)"
+    func markPublished() throws {
+        self.metaInfo.published = Date()
+        try self.saveMeta()
     }
 
-    var permanentRelativeImagePath: String {
-        return self.permanentRelativePath + "/photo.jpg"
+    func markNotified() throws {
+        self.metaInfo.notified = Date()
+        try self.saveMeta()
     }
 
     init?(directoryUrl: URL) {
@@ -139,11 +96,20 @@ extension Post.MetaInfo {
     }
 }
 
-extension Post.MetaInfo: DecodableType {
+private extension Post {
+    func saveMeta() throws {
+        let object = NativeTypesEncoder.objectFromEncodable(self.metaInfo, mode: .saveLocally)
+        let data = try JSONSerialization.data(withJSONObject: object, options: .prettyPrinted)
+        try data.write(to: self.metaUrl, options: .atomic)
+    }
+}
+
+extension Post.MetaInfo: CodableType {
     private struct Keys {
         class title: CoderKey<String> {}
         class summary: CoderKey<String> {}
-        class published: CoderKey<String> {}
+        class published: OptionalCoderKey<String> {}
+        class notified: OptionalCoderKey<String> {}
         class modified: OptionalCoderKey<String> {}
         class author: CoderKey<String> {}
         class featured: CoderKey<Bool> {}
@@ -153,11 +119,27 @@ extension Post.MetaInfo: DecodableType {
     public init(decoder: DecoderType) throws {
         self.title = try decoder.decode(Keys.title.self)
         self.summary = try decoder.decode(Keys.summary.self)
-        let published = try decoder.decode(Keys.published.self).railsDate!
+        let published = try decoder.decode(Keys.published.self)?.iso8601DateTime
         self.published = published
-        self.modified = try decoder.decode(Keys.modified.self)?.railsDate ?? published
+        self.modified = try decoder.decode(Keys.modified.self)?.iso8601DateTime
+        self.notified = try decoder.decode(Keys.notified.self)?.iso8601DateTime
         self.author = try decoder.decode(Keys.author.self)
         self.isFeatured = try decoder.decode(Keys.featured.self)
         self.imageHeight = try decoder.decode(Keys.image_height.self)
+    }
+
+    func encode(_ encoder: EncoderType) {
+        encoder.encode(self.title, forKey: Keys.title.self)
+        encoder.encode(self.summary, forKey: Keys.summary.self)
+        encoder.encode(self.published?.iso8601DateTime, forKey: Keys.published.self)
+        encoder.encode(self.author, forKey: Keys.author.self)
+        encoder.encode(self.isFeatured, forKey: Keys.featured.self)
+        encoder.encode(self.imageHeight, forKey: Keys.image_height.self)
+        if let notified = self.notified {
+            encoder.encode(notified.iso8601DateTime, forKey: Keys.notified.self)
+        }
+        if let modified = self.modified {
+            encoder.encode(modified.iso8601DateTime, forKey: Keys.modified.self)
+        }
     }
 }

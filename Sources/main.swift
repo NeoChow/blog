@@ -52,6 +52,8 @@ let parser = Parser(arguments: CommandLine.arguments)
 
 parser.command(named: "server", handler: ServerCommand.handler)
 parser.command(named: "regenerate", handler: RegenerateCommand.handler)
+parser.command(named: "publish", handler: PublishCommand.handler)
+parser.command(named: "notify", handler: NotifyCommand.handler)
 
 do {
     try parser.parse()

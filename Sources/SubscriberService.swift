@@ -72,19 +72,21 @@ struct SubscriberService {
         return subscribers
     }
 
-    mutating func notify(for post: Post, atDomain domain: String) throws {
+    mutating func notify(for posts: [PublishedPost], atDomain domain: String) throws {
         for subscriber in try self.loadAllSubscribers() {
             let html = try "Views/post-notification-email.html"
                 .map(FileContents())
                 .map(Template(build: { builder in
-                    post.buildReference(to: builder)
                     builder["domain"] = domain
                     builder["unsubscribeToken"] = subscriber.unsubscribeToken
+                    builder.buildValues(forKey: "posts", withArray: posts) { post, builder in
+                        post.buildPublishedReference(to: builder)
+                    }
                 }))
                 .string()
             let email = Email(
                 to: subscriber.email,
-                subject: "drewag.me: \(post.metaInfo.title)",
+                subject: "New posts on drewag.me",
                 from: "drewag.me notifications<donotreply@drewag.me>",
                 HTMLBody: html
             )

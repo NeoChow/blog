@@ -1,8 +1,9 @@
 {
-    "title": "Objective-C Bindings",
-    "summary": "An extension to NSObject that adds the allows binding the properties of two different objects together, allowing for much more declarative and understandable code.",
-    "published": "2013-01-28",
-    "author": "Andrew Wagner",
-    "image_height": 366,
-    "featured": false
+  "summary" : "An extension to NSObject that adds the allows binding the properties of two different objects together, allowing for much more declarative and understandable code.",
+  "published" : "2013-01-28T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 366,
+  "title" : "Objective-C Bindings",
+  "author" : "Andrew Wagner"
 }

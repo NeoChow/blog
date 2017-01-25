@@ -1,8 +1,9 @@
 {
-    "title": "7 Cool Features in Swift",
-    "summary": "Concrete examples for some cool and practical new features in Swift that will improve the daily lives of iOS and OS X programmers.",
-    "published": "2014-06-29",
-    "author": "Andrew Wagner",
-    "image_height": 300,
-    "featured": false
+  "summary" : "Concrete examples for some cool and practical new features in Swift that will improve the daily lives of iOS and OS X programmers.",
+  "published" : "2014-06-29T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 300,
+  "title" : "7 Cool Features in Swift",
+  "author" : "Andrew Wagner"
 }

@@ -23,7 +23,7 @@ struct PreviewRouter: Router {
                 ],
                 htmlBuild: { builder in
                     func buildPost(post: Post, builder: TemplateBuilder) {
-                        post.buildReference(to: builder, link: "preview/" + post.directoryUrl.lastPathComponent)
+                        post.buildPreviewReference(to: builder)
                     }
 
                     builder.buildValues(forKey: "stylesheets", withArray: ["/assets/css/home.css"], build: {$1["link"] = $0})

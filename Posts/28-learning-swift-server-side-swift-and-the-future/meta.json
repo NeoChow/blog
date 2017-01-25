@@ -1,9 +1,9 @@
 {
-    "title": "Learning Swift, Server-Side Swift, and the Future",
-    "summary": "I have been extremely busy so I haven't made the time to write any blog posts. In this post I give a brief overview of what I have been up to and what my short-term plans for the future are.",
-    "published": "2017-01-17",
-    "author": "Andrew Wagner",
-    "image_height": 300,
-    "featured": true
+  "summary" : "I have been extremely busy so I haven't made the time to write any blog posts. In this post I give a brief overview of what I have been up to and what my short-term plans for the future are.",
+  "published" : "2017-01-17T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : true,
+  "image_height" : 300,
+  "title" : "Learning Swift, Server-Side Swift, and the Future",
+  "author" : "Andrew Wagner"
 }
-

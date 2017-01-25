@@ -1,8 +1,9 @@
 {
-    "title": "Implicit Animation for CAShapeLayer's Path",
-    "summary": "A way to make all path changes on a CAShapeLayer be animated automatically. ",
-    "published": "2013-06-03",
-    "author": "Andrew Wagner",
-    "image_height": 230,
-    "featured": false
+  "summary" : "A way to make all path changes on a CAShapeLayer be animated automatically. ",
+  "published" : "2013-06-03T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 230,
+  "title" : "Implicit Animation for CAShapeLayer's Path",
+  "author" : "Andrew Wagner"
 }

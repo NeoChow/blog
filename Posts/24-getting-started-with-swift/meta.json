@@ -1,8 +1,9 @@
 {
-    "title": "Getting Started With Swift",
-    "summary": "A list of key concepts to know when getting started with Swift and links to resources to stay current with its development.",
-    "published": "2014-07-13",
-    "author": "Andrew Wagner",
-    "image_height": 347,
-    "featured": false
+  "summary" : "A list of key concepts to know when getting started with Swift and links to resources to stay current with its development.",
+  "published" : "2014-07-13T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 347,
+  "title" : "Getting Started With Swift",
+  "author" : "Andrew Wagner"
 }

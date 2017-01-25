@@ -1,8 +1,9 @@
 {
-    "title": "Swift KVO Substitute: Observable Variables",
-    "summary": "My attempt to implement a KVO replacement purely in Swift",
-    "published": "2014-07-20",
-    "author": "Andrew Wagner",
-    "image_height": 256,
-    "featured": false
+  "summary" : "My attempt to implement a KVO replacement purely in Swift",
+  "published" : "2014-07-20T07:00:00.0Z",
+  "notified" : "2017-01-25T07:19:51.7Z",
+  "featured" : false,
+  "image_height" : 256,
+  "title" : "Swift KVO Substitute: Observable Variables",
+  "author" : "Andrew Wagner"
 }
