@@ -35,19 +35,18 @@ struct ContactRouter: Router {
                     throw UserReportableError(.badRequest, "Message is required")
                 }
 
-                var body = "<p>From: \(try form.requiredValue(for: .name))</p>"
-                body += "<p>Subject: \(try form.requiredValue(for: .subject))"
+                var body = "From: \(try form.requiredValue(for: .name))"
+                body += "\nSubject: \(try form.requiredValue(for: .subject))"
                 if let customSubject = form.value(for: .customSubject) {
                     body += " - \(customSubject)"
                 }
-                body += "</p>"
-                body += "<p><strong>Message:</strong></p>"
-                body += "<p>\(description)</p>"
+                body += "\nMessage:"
+                body += "\n\(description)"
                 let email = Email(
                     to: "contact-blog@drewag.me",
                     subject: "Blog Contact Form Message",
                     from: fromEmail,
-                    HTMLBody: body
+                    plainBody: body
                 )
                 guard email.send() else {
                     throw UserReportableError(.internalServerError, "Unknown error")
