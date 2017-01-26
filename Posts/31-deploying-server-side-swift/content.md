@@ -230,7 +230,7 @@ Now you just need to make sure the SSL module is enabled along with this new sit
 You should now be able to securely communicate with your web service if it is running on port 8080.
 
 One great part of this configuration is that all SSL encryption and decryption is being handled by Apache and you don't have to rely on the implementation inside whatever
-Swift framework you are using. 
+Swift framework you are using.
 
 Running Your Binary as a Service
 ---------------------------------
@@ -315,11 +315,10 @@ For my example, I will show an HTTP configuration but the same applies for the S
     # /etc/apache2/sites-available/dev.drewag.me
     Listen 8082
     &#60;VirtualHost *:8082>
-        DocumentRoot /var/www/drewag.me/
-        DirectoryIndex site-down.html
+        AliasMatch "^/.+$" "/var/www/dev.drewag.me/site-down.html"
     &#60;/VirtualHost>
 
-This is a very simple static site that simply shows the site-down html file inside my service's code base. There are definitely more advanced things you can do, but this
+This is a very simple static site that simply serves all traffic from the site-down.html file inside my service's code base. There are definitely more advanced things you can do, but this
 serves my purposes well. Keep in mind though, if you are using external css, image, or javascript files, they will not be available. If you still need those, I will
 leave it up to you to research configuring Apache to serve them.
 
