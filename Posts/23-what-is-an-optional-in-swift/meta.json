@@ -2,7 +2,7 @@
   "summary" : "A summary with examples of what an Optional is in Swift",
   "published" : "2014-07-05T07:00:00.0Z",
   "notified" : "2017-01-25T07:19:51.7Z",
-  "featured" : true,
+  "featured" : false,
   "image_height" : 338,
   "title" : "What is an Optional in Swift",
   "author" : "Andrew Wagner"
