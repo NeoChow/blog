@@ -29,10 +29,8 @@ struct ContactRouter: Router {
                     throw UserReportableError(.badRequest, "Invalid email")
                 }
 
-                let description = try form.requiredValue(for: .description).addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics
-                    .union(CharacterSet.whitespacesAndNewlines)
-                    .union(CharacterSet.punctuationCharacters)
-                ) ?? ""
+                let description = try form.requiredValue(for: .description)
+                    .replacingOccurrences(of: "\n", with: "<br />")
                 guard !description.isEmpty else {
                     throw UserReportableError(.badRequest, "Message is required")
                 }
@@ -44,7 +42,7 @@ struct ContactRouter: Router {
                 }
                 body += "</p>"
                 body += "<p><strong>Message:</strong></p>"
-                body += "<p>\(description)/p>"
+                body += "<p>\(description)</p>"
                 let email = Email(
                     to: "contact-blog@drewag.me",
                     subject: "Blog Contact Form Message",
