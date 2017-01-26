@@ -30,7 +30,6 @@ struct ContactRouter: Router {
                 }
 
                 let description = try form.requiredValue(for: .description)
-                    .replacingOccurrences(of: "\n", with: "<br />")
                 guard !description.isEmpty else {
                     throw UserReportableError(.badRequest, "Message is required")
                 }
