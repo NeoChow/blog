@@ -13,7 +13,7 @@
 }
 
 #content form {
-    width:60%;
+    max-width:500px;
     margin-left:auto;
     margin-right:auto;
     text-align:center;
@@ -23,11 +23,36 @@
     text-align:left;
 }
 
-#content form input {
-    display:inline;
+#content form label {
+    width:100%;
+    font-size:14pt;
+    text-align:left;
+    display:block;
+    margin-top:1em;
+    margin-bottom:0.1em;
+}
+
+#content form input, #content form select, #content form textarea {
+    display:inline-block;
+    width:96%;
+}
+
+#content form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width:100%;
+}
+
+#content form textarea {
+    height:6em;
+    resize:vertical;
 }
 
 #content form input[type="submit"] {
     font-size:12pt;
-    width:auto;
+    width:100%;
+    background-color:#004581;
+    padding-top:0.7em;
+    padding-bottom:0.7em;
 }

@@ -1,0 +1,45 @@
+<h1>Contact</h1>
+
+<form method="POST">
+    {{ if error }}
+    <p class="error">{{ error }}</p>
+    {{ end }}
+    {{ if message }}
+    <p class="message">{{ message }}</p>
+    {{ end }}
+
+    <script>
+        function onSelectChanged(select) {
+            var label = document.getElementById("other-label")
+            var field = document.getElementById("other-field")
+            if (select.value == "Other") {
+                label.style.display = null
+                field.style.display = null
+            }
+            else {
+
+                label.style.display = "none"
+                field.style.display = "none"
+            }
+        }
+    </script>
+
+    <label>Email</label>
+    <input type="email" name="email" value="{{ email }}" placeholder="your-email@domain.com" />
+    <label>Name</label>
+    <input type="text" name="name" value="{{ name }}" placeholder="what you go by" />
+    <label>Subject</label>
+    <select name="subject" onchange="onSelectChanged(this)">
+        <option value="">- Select -</option>
+        <option value="Ask a Question">Ask a Question</option>
+        <option value="Make a Correction">Make a Correction</option>
+        <option value="Report a Problem With this Site">Report a Problem With this Site</option>
+        <option value="Other">Other</option>
+    </select>
+    <label id="other-label" style="display:none" >Other Subject</label>
+    <input id="other-field" style="display:none" type="text" name="customSubject" value="{{ customSubject }}" placeholder="what the message is about" />
+    <label>Messsage</label>
+    <textarea name="description" />{{description}}</textarea>
+
+    <input type="submit" value="Send" />
+</form>

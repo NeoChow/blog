@@ -24,6 +24,7 @@ struct MainRouter: Router {
         .any("subscribers", router: SubscribersRouter()),
 
         .any("donate", router: DonateRouter()),
+        .any("contact", router: ContactRouter()),
         .any(router: FeaturesRouter()),
         .any(router: PagesRouter()),
         .any(router: PublishedRouter()),
