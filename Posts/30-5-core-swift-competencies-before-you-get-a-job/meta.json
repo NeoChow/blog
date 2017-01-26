@@ -2,7 +2,7 @@
   "summary": "A list of skills, beyond just the ability to get the job done, every Swift developer should know before they get paid to develop.",
   "author": "Andrew Wagner",
   "published": "2017-01-21T07:00:00.0Z",
-  "featured": 1,
+  "featured": true,
   "title": "5 Core Swift Competencies Before You Get a Job",
   "image_height": 300,
   "notified": "2017-01-26T19:01:57.6Z"

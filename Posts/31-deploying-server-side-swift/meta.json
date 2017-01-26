@@ -2,7 +2,7 @@
   "summary": "There are many ways you could choose to host a Swift website or web service, but here I share what has worked well for me.",
   "author": "Andrew Wagner",
   "published": "2017-01-26T16:32:21.2Z",
-  "featured": 1,
+  "featured": true,
   "title": "Deploying Server-Side Swift",
   "image_height": 300,
   "notified": "2017-01-26T19:01:57.6Z"
