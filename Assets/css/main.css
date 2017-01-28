@@ -112,6 +112,7 @@ a:hover {
   padding-bottom:20px;
   text-decoration:none;
   line-height:2em;
+  display:inline-block;
 }
 
 #footer img {
