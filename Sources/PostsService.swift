@@ -23,8 +23,8 @@ struct PostsService {
         }
 
         let url = URL(fileURLWithPath: "Posts")
-        let posts = FileService.default.contentsOfDirectory(at: url, skipHiddenFiles: true)
-            .map({Post(directoryUrl: $0)!})
+        let posts = try FileService.default.contentsOfDirectory(at: url, skipHiddenFiles: true)
+            .map({try Post(directoryUrl: $0)})
             .sorted(by: {($0.metaInfo.published ?? Date.distantFuture).timeIntervalSince($1.metaInfo.published ?? Date.distantFuture) > 0})
         self.allPosts = posts
         return posts
@@ -33,7 +33,7 @@ struct PostsService {
     mutating func loadAllPublishedPosts() throws -> [PublishedPost] {
         return try self.loadAllPosts()
             .filter({$0.metaInfo.published != nil})
-            .map({PublishedPost(post: $0, published: $0.metaInfo.published!)})
+            .map({try PublishedPost(post: $0, published: $0.metaInfo.published!)})
     }
 
     mutating func loadAllUnpublishedPosts() throws -> [Post] {

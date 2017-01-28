@@ -10,14 +10,14 @@ import Foundation
 import TextTransformers
 
 extension Post {
-    func buildPreviewContent(to builder: TemplateBuilder, atUrl baseUrl: URL) {
+    func buildPreviewContent(to builder: TemplateBuilder, atUrl baseUrl: URL) throws {
         builder["title"] = self.metaInfo.title
         builder["published"] = self.metaInfo.published?.date ?? "Unpublished"
         builder["isoPublished"] = self.metaInfo.published?.iso8601DateTime ?? "Unpublished"
         builder["isoModified"] = self.metaInfo.modified?.iso8601DateTime ?? "Unpublished"
         builder["summary"] = self.metaInfo.summary
         builder["imageUrl"] = baseUrl.appendingPathComponent("photo.jpg").relativePath
-        builder["content"] = self.html
+        builder["content"] = try self.loadHtml()
         builder["imageHeight"] = "\(self.metaInfo.imageHeight)"
     }
 
@@ -32,8 +32,8 @@ extension Post {
 }
 
 extension PublishedPost {
-    func buildPublishedContent(to builder: TemplateBuilder, atUrl baseUrl: URL) {
-        self.buildPreviewContent(to: builder, atUrl: baseUrl)
+    func buildPublishedContent(to builder: TemplateBuilder, atUrl baseUrl: URL) throws {
+        try self.buildPreviewContent(to: builder, atUrl: baseUrl)
         builder["permaLink"] = self.permanentRelativePath
     }
 

@@ -44,9 +44,9 @@ class PublishedPost: Post {
         return self.permanentRelativePath + "/photo.jpg"
     }
 
-    init(post: Post, published: Date) {
+    init(post: Post, published: Date) throws {
         self.published = published
 
-        super.init(directoryUrl: post.directoryUrl)!
+        try super.init(directoryUrl: post.directoryUrl)
     }
 }

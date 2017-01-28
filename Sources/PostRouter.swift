@@ -19,7 +19,7 @@ class PostRouter {
 
     func imageResponse(to request: Request, forPostAtRelativePath relativePath: String) throws -> ResponseStatus {
         let localURL = URL(fileURLWithPath: self.baseLocalPath).appendingPathComponent(relativePath)
-        guard let post = Post(directoryUrl: localURL) else {
+        guard let post = try? Post(directoryUrl: localURL) else {
             return .unhandled
         }
         return .handled(try request.response(withFileAt: post.imageUrl, status: .ok))
@@ -34,7 +34,7 @@ class PreviewPostRouter: PostRouter, ParameterizedRouter {
     public var routes: [ParameterizedRoute<String>] { return [
         .get("", handler: { request, postName in
             let localURL = URL(fileURLWithPath: self.baseLocalPath).appendingPathComponent(postName)
-            guard let post = Post(directoryUrl: localURL) else {
+            guard let post = (try? Post(directoryUrl: localURL)) ?? nil else {
                 return .unhandled
             }
             return .handled(try request.response(
@@ -52,7 +52,9 @@ class PreviewPostRouter: PostRouter, ParameterizedRouter {
                     builder.buildValues(forKey: "scripts", withArray: [
                         "/assets/js/prismjs.js",
                     ], build: {$1["link"] = $0})
-                    post.buildPreviewContent(to: builder, atUrl: request.endpoint)
+                    do { try post.buildPreviewContent(to: builder, atUrl: request.endpoint) } catch {
+                        builder["content"] = "<p>Erorr loading: \(error)</p>"
+                    }
                 }
             ))
         }),
@@ -75,7 +77,7 @@ class PublishedPostRouter: PostRouter, ParameterizedRouter {
             let day = param.0.1 < 10 ? "0\(param.0.1)" : "\(param.0.1)"
             let relativePath = "\(param.0.0.0)/\(month)/\(day)/\(param.1)"
             let localURL = URL(fileURLWithPath: self.baseLocalPath).appendingPathComponent(relativePath)
-            guard let post = Post(directoryUrl: localURL) else {
+            guard let post = try? Post(directoryUrl: localURL) else {
                 return .unhandled
             }
             return .handled(try request.response(

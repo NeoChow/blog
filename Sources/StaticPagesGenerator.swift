@@ -102,7 +102,7 @@ private extension StaticPagesGenerator {
         let html = try "Views/post.html"
             .map(FileContents())
             .map(Template(build: { builder in
-                post.buildPublishedContent(to: builder, atUrl: URL(fileURLWithPath: relativePath))
+                try post.buildPublishedContent(to: builder, atUrl: URL(fileURLWithPath: relativePath))
             }))
             .string()
 
@@ -173,13 +173,13 @@ private extension StaticPagesGenerator {
 
                 builder["domain"] = domain
                 builder["mostRecentUpdated"] = posts.first?.modified.iso8601DateTime
-                builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
+                try builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
                     builder["title"] = post.metaInfo.title
                     builder["permaLink"] = post.permanentRelativePath
                     builder["modified"] = post.modified.iso8601DateTime
                     builder["description"] = post.metaInfo.summary
                     builder["publishedYear"] = post.published.year
-                    builder["content"] = post.html.data(using: .utf8)?.base64EncodedString()
+                    builder["content"] = try post.loadHtml().data(using: .utf8)?.base64EncodedString()
                     builder["summary"] = post.metaInfo.summary
                 })
             }))

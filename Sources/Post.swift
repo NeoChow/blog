@@ -9,6 +9,7 @@
 import Foundation
 import SwiftPlusPlus
 import TextTransformers
+import SwiftServe
 
 class Post {
     let directoryUrl: URL
@@ -25,26 +26,19 @@ class Post {
         var modified: Date?
     }
 
-    lazy var metaInfo: MetaInfo = {
-        do {
-            let object = try FileService.default.jsonObject(at: self.metaUrl)
-            return try NativeTypesDecoder.decodableTypeFromObject(object, mode: .saveLocally)
-        }
-        catch let error as UserReportableError {
-            return MetaInfo(error: error)
-        }
-        catch {
-            fatalError("\(error)")
-        }
-    }()
+    private(set) var metaInfo: MetaInfo
+    fileprivate var html: String?
 
-    lazy var html: String = {
-        return (try? self.contentsUrl.relativePath
+    func loadHtml() throws -> String {
+        if let html = self.html {
+            return html
+        }
+
+        return try self.contentsUrl.relativePath
             .map(FileContents())
             .map(Markdown())
             .string()
-        ) ?? ""
-    }()
+    }
 
     var urlTitle: String {
         let components = self.directoryUrl.lastPathComponent.components(separatedBy: "-")
@@ -55,8 +49,12 @@ class Post {
         return self.directoryUrl.appendingPathComponent("photo.jpg")
     }
 
+    static func metaUrl(in directory: URL) -> URL {
+        return directory.appendingPathComponent("meta.json")
+    }
+
     var metaUrl: URL {
-        return self.directoryUrl.appendingPathComponent("meta.json")
+        return Post.metaUrl(in: self.directoryUrl)
     }
 
     func markPublished() throws {
@@ -69,12 +67,16 @@ class Post {
         try self.saveMeta()
     }
 
-    init?(directoryUrl: URL) {
+    init(directoryUrl: URL) throws {
         guard FileService.default.fileExists(at: directoryUrl) else {
-            return nil
+            throw UserReportableError(.internalServerError, "Post not found")
         }
 
         self.directoryUrl = directoryUrl
+
+        let object = try FileService.default.jsonObject(at: Post.metaUrl(in: directoryUrl))
+        let metaInfo: MetaInfo = try NativeTypesDecoder.decodableTypeFromObject(object, mode: .saveLocally)
+        self.metaInfo = metaInfo
     }
 }
 
@@ -84,23 +86,11 @@ fileprivate extension Post {
     }
 }
 
-extension Post.MetaInfo {
-    fileprivate init(error: UserReportableError) {
-        self.title = "Error Loading: \(error.alertTitle)"
-        self.summary = error.alertMessage
-        self.published = Date.distantPast
-        self.modified = Date.distantPast
-        self.author = "Error Post"
-        self.isFeatured = true
-        self.imageHeight = 0
-    }
-}
-
 private extension Post {
     func saveMeta() throws {
         let object = NativeTypesEncoder.objectFromEncodable(self.metaInfo, mode: .saveLocally)
         let data = try JSONSerialization.data(withJSONObject: object, options: .prettyPrinted)
-        try data.write(to: self.metaUrl, options: .atomic)
+        try data.write(to: Post.metaUrl(in: self.directoryUrl), options: .atomic)
     }
 }
 
