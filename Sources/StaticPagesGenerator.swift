@@ -178,6 +178,7 @@ private extension StaticPagesGenerator {
         print("Generating sitemap...", terminator: "")
 
         let posts = try self.postsService.loadAllPublishedPosts()
+        let organized = try self.postsService.loadPostsOrganizedByTag()
         let xml = try "Views/sitemap.xml"
             .map(FileContents())
             .map(Template(build: { builder in
@@ -185,6 +186,16 @@ private extension StaticPagesGenerator {
                 builder.buildValues(forKey: "posts", withArray: posts, build: { post, builder in
                     builder["link"] = post.permanentRelativePath
                     builder["modified"] = post.modified.railsDate
+                })
+                builder.buildValues(forKey: "tags", withArray: Array(organized.keys), build: { tag, builder in
+                    builder["link"] = "/posts/tags/\(tag.lowercased().replacingOccurrences(of: " ", with: "-"))"
+                    var modified = Date.distantPast
+                    for post in organized[tag]! {
+                        if post.modified > modified {
+                            modified = post.modified
+                        }
+                    }
+                    builder["modified"] = modified.railsDate
                 })
             }))
             .string()

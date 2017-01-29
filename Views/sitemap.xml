@@ -30,6 +30,14 @@
         <loc>{{domain}}{{link}}</loc>
         <lastmod>{{modified}}</lastmod>
         <changefreq>never</changefreq>
+        <priority>1</priority>
+    </url>
+    {{end}}
+    {{repeat tags}}
+    <url>
+        <loc>{{domain}}{{link}}</loc>
+        <lastmod>{{modified}}</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
     {{end}}
