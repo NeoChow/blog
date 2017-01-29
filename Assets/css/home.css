@@ -43,6 +43,10 @@
   margin-top:0;
 }
 
+.post.featured #description ul.tags {
+    margin-left:20px;
+}
+
 .post .published {
   color:#585858;
   margin-bottom:0.2em;
@@ -62,7 +66,6 @@
 .post h3 {
   margin-top:2em;
 }
-
 
 @media all and (max-width:600px) {
     .post img {
@@ -85,6 +88,10 @@
     .post #description h2, .post #description p {
         margin-left:4px;
         margin-right:4px;
+    }
+
+    .post.featured #description ul.tags {
+        margin-left:4px;
     }
 
     #content .post h2 {

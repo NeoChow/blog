@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 394,
   "title" : "Enforce Good UX Through Reusable Code",
+  "tags": ["UX"],
   "author" : "Andrew Wagner"
 }

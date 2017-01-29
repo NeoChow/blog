@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftServe
+import SwiftPlusPlus
 import TextTransformers
 
 struct PublishedRouter: Router {
@@ -39,6 +40,25 @@ struct PublishedRouter: Router {
                     }
                 ))
             }),
+            .get("tags", subRoutes: [
+                .getWithParam(consumeEntireSubPath: false, handler: { (request, rawTag: String) in
+                    let url = URL(fileURLWithPath: "Generated/posts/tags/\(rawTag).html")
+                    guard FileService.default.fileExists(at: url) else {
+                        return .unhandled
+                    }
+                    return .handled(try request.response(
+                        htmlFromFiles: [
+                            "Views/header.html",
+                            url.relativePath,
+                            "Views/footer.html",
+                        ],
+                        htmlBuild: { builder in
+                            builder["title"] = "\(rawTag) Posts"
+                            builder.buildValues(forKey: "stylesheets", withArray: ["/assets/css/home.css"], build: {$1["link"] = $0})
+                        }
+                    ))
+                })
+            ]),
             .getWithParam(consumeEntireSubPath: false, router: YearRouter()),
             .getWithParam(consumeEntireSubPath: false, handler: { (request, title: String) in
                 do {

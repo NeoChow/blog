@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 300,
   "title" : "The Most Difficult Thing I've Ever Done - Writing a Technical Book",
+  "tags": ["Writing"],
   "author" : "Andrew Wagner"
 }

@@ -20,6 +20,7 @@ class Post {
         let author: String
         let isFeatured: Bool
         let imageHeight: Int
+        let tags: [String]
 
         var published: Date?
         var notified: Date?
@@ -104,6 +105,7 @@ extension Post.MetaInfo: CodableType {
         class author: CoderKey<String> {}
         class featured: CoderKey<Bool> {}
         class image_height: CoderKey<Int> {}
+        class tags: CoderKey<String> {}
     }
 
     public init(decoder: DecoderType) throws {
@@ -116,6 +118,7 @@ extension Post.MetaInfo: CodableType {
         self.author = try decoder.decode(Keys.author.self)
         self.isFeatured = try decoder.decode(Keys.featured.self)
         self.imageHeight = try decoder.decode(Keys.image_height.self)
+        self.tags = try decoder.decodeArray(Keys.tags.self)
     }
 
     func encode(_ encoder: EncoderType) {
@@ -125,6 +128,7 @@ extension Post.MetaInfo: CodableType {
         encoder.encode(self.author, forKey: Keys.author.self)
         encoder.encode(self.isFeatured, forKey: Keys.featured.self)
         encoder.encode(self.imageHeight, forKey: Keys.image_height.self)
+        encoder.encode(self.tags, forKey: Keys.tags.self)
         if let notified = self.notified {
             encoder.encode(notified.iso8601DateTime, forKey: Keys.notified.self)
         }

@@ -5,10 +5,11 @@
         <h3><a href="{{monthLink}}">{{month}}</a></h3>
         {{repeat posts}}
             {{repeat posts}}
-            <div class="post">
+            <div class="post featured">
                 <a href="{{link}}"><img src="{{imageLink}}" /></a>
                 <div id="description">
                     <h2><a href="{{link}}">{{title}}</a></h2>
+                    <ul class="tags">{{repeat tags}}<li><a href="{{link}}">{{name}}</a></li>{{end}}</ul>
                     <p class="published"><a href="{{dayLink}}"><time>{{published}}</time></a></p>
                     <p>{{summary}}</p>
                 </div>

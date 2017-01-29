@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 331,
   "title" : "Better UIAlert Handling and Easier Testing",
+  "tags": ["iOS"],
   "author" : "Andrew Wagner"
 }

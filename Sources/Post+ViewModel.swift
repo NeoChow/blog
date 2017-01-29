@@ -19,8 +19,11 @@ extension Post {
         builder["imageUrl"] = baseUrl.appendingPathComponent("photo.jpg").relativePath
         builder["content"] = try self.loadHtml()
         builder["imageHeight"] = "\(self.metaInfo.imageHeight)"
+        builder.buildValues(forKey: "tags", withArray: self.metaInfo.tags, build: { tag, builder in
+            builder["name"] = tag.lowercased()
+            builder["link"] = "/posts/tags/\(tag.lowercased().replacingOccurrences(of: " ", with: "-"))"
+        })
     }
-
 
     func buildPreviewReference(to builder: TemplateBuilder) {
         builder["title"] = self.metaInfo.title
@@ -28,6 +31,10 @@ extension Post {
         builder["summary"] = self.metaInfo.summary
         builder["imageLink"] = "preview/" + self.directoryUrl.lastPathComponent + "/photo.jpg"
         builder["link"] = "preview/" + self.directoryUrl.lastPathComponent
+        builder.buildValues(forKey: "tags", withArray: self.metaInfo.tags, build: { tag, builder in
+            builder["name"] = tag.lowercased()
+            builder["link"] = "/posts/tags/\(tag.lowercased().replacingOccurrences(of: " ", with: "-"))"
+        })
     }
 }
 

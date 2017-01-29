@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 317,
   "title" : "Uses for Implicitly Unwrapped Optionals in Swift",
+  "tags": ["Swift", "Optionals"],
   "author" : "Andrew Wagner"
 }

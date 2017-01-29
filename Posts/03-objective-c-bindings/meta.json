@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 366,
   "title" : "Objective-C Bindings",
+  "tags": ["Objective-C"],
   "author" : "Andrew Wagner"
 }

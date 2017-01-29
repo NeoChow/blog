@@ -21,6 +21,7 @@ class StaticPagesGenerator {
         try self.generateIndex()
         try self.generatePosts()
         try self.generateArchive()
+        try self.generateTagDirectories()
         try self.generateSitemap(forDomain: domain)
         try self.generateAtomFeed(forDomain: domain)
 
@@ -125,7 +126,7 @@ private extension StaticPagesGenerator {
     func generateArchive() throws {
         print("Generating archive...")
 
-        let organized = try self.postsService.loadOrganizedPosts()
+        let organized = try self.postsService.loadPostsOrganizedByDate()
         for (year, yearDict) in organized.keysAndValues {
             for (month, monthDict) in yearDict.keysAndValues {
                 for (day, dayArray) in monthDict.keysAndValues {
@@ -138,6 +139,39 @@ private extension StaticPagesGenerator {
         try self.generateArchive(with: organized)
 
         print("done")
+    }
+
+    func generateTagDirectories() throws {
+        print("Generating tag directories...")
+
+        let directory = "Generated-working/posts/tags"
+        self.createDirectory(at: directory)
+
+        let organized = try self.postsService.loadPostsOrganizedByTag()
+        for (tag, posts) in organized {
+            try self.generateDirectory(for: tag, with: posts)
+        }
+        print("done")
+    }
+
+    func generateDirectory(for tag: String, with posts: [PublishedPost]) throws {
+        print("Generating directory for \(tag)...", terminator: "")
+
+        let html = try "Views/tag-directory.html"
+            .map(FileContents())
+            .map(Template(build: { builder in
+                func buildPost(post: PublishedPost, builder: TemplateBuilder) {
+                    post.buildPublishedReference(to: builder)
+                }
+
+                builder["tag"] = tag
+                builder.buildValues(forKey: "posts", withArray: posts, build: buildPost)
+            }))
+            .string()
+        try self.write(html, to: "Generated-working/posts/tags/\(tag.replacingOccurrences(of: " ", with: "-")).html")
+
+        print("done")
+
     }
 
     func generateSitemap(forDomain domain: String) throws {

@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 230,
   "title" : "Implicit Animation for CAShapeLayer's Path",
+  "tags": ["Objective-C", "Animation", "iOS"],
   "author" : "Andrew Wagner"
 }

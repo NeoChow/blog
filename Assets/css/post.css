@@ -11,8 +11,13 @@ article header img {
   margin-top:1em;
 }
 
-article h2 {
+article ul.tags {
+    text-align:center;
+}
 
+article footer ul.tags {
+    border-top:thin solid #004581;
+    padding-top:0.5em;
 }
 
 article h2 a {

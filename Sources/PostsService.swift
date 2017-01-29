@@ -45,7 +45,7 @@ struct PostsService {
             .filter({$0.metaInfo.notified == nil})
     }
 
-    mutating func loadOrganizedPosts() throws -> AllDict {
+    mutating func loadPostsOrganizedByDate() throws -> AllDict {
         var organized = AllDict()
 
         for post in try self.loadAllPublishedPosts() {
@@ -62,6 +62,20 @@ struct PostsService {
             organized[yearString] = yearDict
         }
 
+        return organized
+    }
+
+    mutating func loadPostsOrganizedByTag() throws -> [String:[PublishedPost]] {
+        var organized = [String:[PublishedPost]]()
+
+        for post in try self.loadAllPublishedPosts() {
+            for tag in post.metaInfo.tags {
+                var postArray = organized[tag] ?? []
+                postArray.append(post)
+                organized[tag] = postArray
+            }
+        }
+        
         return organized
     }
 

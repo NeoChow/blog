@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 328,
   "title" : "Changes at a Glance",
+  "tags": ["Coding Practices"],
   "author" : "Andrew Wagner"
 }

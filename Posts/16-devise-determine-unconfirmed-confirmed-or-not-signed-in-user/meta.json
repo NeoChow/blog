@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 302,
   "title" : "Devise: determine unconfirmed, confirmed, or not signed in user",
+  "tags": ["Rails"],
   "author" : "Andrew Wagner"
 }

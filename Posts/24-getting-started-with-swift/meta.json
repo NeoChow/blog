@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 347,
   "title" : "Getting Started With Swift",
+  "tags": ["Swift", "Optionals", "Memory Management", "Generics", "Be a Better Developer"],
   "author" : "Andrew Wagner"
 }

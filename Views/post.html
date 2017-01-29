@@ -33,11 +33,15 @@
 <article class="post">
   <header>
       <h1><a href="{{permaLink}}">{{title}}</a></h1>
+      <ul class="tags">{{repeat tags}}<li><a href="{{link}}">{{name}}</a></li>{{end}}</ul>
       <p><time>Published on {{published}}</time></p>
       {{if imageUrl}}<img src="{{imageUrl}}" alt />{{end}}
   </header>
   {{content}}
-  <footer><p>Written by <a href="/about-me">Andrew Wagner</a></p></footer>
+  <footer>
+      <p>Written by <a href="/about-me">Andrew Wagner</a></p>
+      <ul class="tags">{{repeat tags}}<li><a href="{{link}}">{{name}}</a></li>{{end}}</ul>
+  </footer>
 </article>
 
 <p><em>Want to learn more? Check out <a href="/">other posts I've written</a>.</em></p>

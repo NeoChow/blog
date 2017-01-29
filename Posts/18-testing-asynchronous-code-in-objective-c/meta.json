@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 231,
   "title" : "Testing Asynchronous Code in Objective-C",
+  "tags": ["Objective-C", "Asynchronous Code"],
   "author" : "Andrew Wagner"
 }

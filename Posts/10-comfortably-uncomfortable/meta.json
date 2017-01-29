@@ -5,5 +5,6 @@
   "featured" : false,
   "image_height" : 594,
   "title" : "Comfortably Uncomfortable",
+  "tags": ["Objective-C", "Be a Better Developer"],
   "author" : "Andrew Wagner"
 }
