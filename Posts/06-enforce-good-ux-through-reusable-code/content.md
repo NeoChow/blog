@@ -9,45 +9,45 @@ A Library of Components and Interactions
 
 Types of buttons and assets for how they look in each of their states
 ------------
-1. Action buttons
-2. Toggle buttons
-3. Information buttons
-4. ...
+- 1. Action buttons
+- 2. Toggle buttons
+- 3. Information buttons
+- 4. ...
 
 Description of different types of transitions and how they should look
 --------------
 
-1. Present details
-2. Present tangental information
-3. Paging
-4. Pop-ups
-5. ...
+- 1. Present details
+- 2. Present tangental information
+- 3. Paging
+- 4. Pop-ups
+- 5. ...
 
 Error conditions and how the user should be alerted
 --------------
-1. Form errors
-2. Network errors
-3. Unknown errors
-4. ...
+- 1. Form errors
+- 2. Network errors
+- 3. Unknown errors
+- 4. ...
 
 Types of text with their font, size, and style
 ------------------
-1. Headings
-2. Paragraphs
-3. Links
-4. Errors
-5. ...
+- 1. Headings
+- 2. Paragraphs
+- 3. Links
+- 4. Errors
+- 5. ...
 
 The elements in a library will vary depending on the the type of project and the size of it but the spirit should be the same. It should be well understood how each element will look and how it will interact with users. Every element should be generic enough to be used in many places. Strong consideration should be made whenever modifying the library or adding to it.
 
 Questions to ask when creating a new Component or Interaction
 =======================================
 
-1. Can an existing element be used instead?
-2. What problem is this element solving?
-3. Is there an existing paradigm in your type of project to solve the problem at hand?
-4. Can this element be described in a few words or a short sentence?
-5. Are there 3 or more places to use this component?
+- 1. Can an existing element be used instead?
+- 2. What problem is this element solving?
+- 3. Is there an existing paradigm in your type of project to solve the problem at hand?
+- 4. Can this element be described in a few words or a short sentence?
+- 5. Are there 3 or more places to use this component?
 
 Useful for Graphic Designers, UX Designers, and Programmers Alike
 ==========================================
