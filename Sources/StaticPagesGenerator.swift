@@ -168,7 +168,7 @@ private extension StaticPagesGenerator {
                 builder.buildValues(forKey: "posts", withArray: posts, build: buildPost)
             }))
             .string()
-        try self.write(html, to: "Generated-working/posts/tags/\(tag.replacingOccurrences(of: " ", with: "-")).html")
+        try self.write(html, to: "Generated-working/posts/tags/\(tag.lowercased().replacingOccurrences(of: " ", with: "-")).html")
 
         print("done")
 
