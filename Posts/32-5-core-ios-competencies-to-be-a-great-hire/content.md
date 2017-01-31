@@ -136,9 +136,9 @@ able to send web requests and handle their responses. As a part of that, you sho
 scenarios like not having internet, internal server errors, bad requests, and timeouts. Every time you make a web
 request you should consider all of those scenarios and have them handled gracefully for your user.
 
-#### URLConnection
+#### URLSession
 
-Apple provides networking APIs directly within Foundation centered around [URLConnection](https://developer.apple.com/reference/foundation/nsurlconnection)
+Apple provides networking APIs directly within Foundation centered around [URLSession](https://developer.apple.com/reference/foundation/nsurlsession)
 
 These are already pretty great APIs so you can handle most of your networking without any third-party libraries. Personally,
 I almost exclusively use the built in APIs and I rarefully find its feature set lacking.
@@ -174,7 +174,7 @@ Avoiding Long-term Problems
 ---------------------------
 
 Besides the common tasks I discussed above, there are also a couple topics I want to make sure iOS developers think about in
-order to avoid long-term problems. 
+order to avoid long-term problems.
 
 ### 4. Asynchronous Tasks
 
@@ -257,7 +257,7 @@ That's a crash course in Model-view-controller but encourage you to research it 
 #### Delegate
 
 The other Design Pattern I would like to discuss is the [Delegate](https://en.wikipedia.org/wiki/Delegation_pattern)
-pattern. The general idea is that a piece of code can delegate out some of its responsibilities to another piece 
+pattern. The general idea is that a piece of code can delegate out some of its responsibilities to another piece
 of code. You may have noticed that a lot of Apple types contain "delegate" properties. These are using this *Delegate*
 pattern.
 
