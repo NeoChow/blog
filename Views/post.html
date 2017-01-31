@@ -40,8 +40,10 @@
   {{content}}
   <footer>
       <p>Written by <a href="/about-me">Andrew Wagner</a></p>
-      <ul class="tags">{{repeat tags}}<li><a href="{{link}}">{{name}}</a></li>{{end}}</ul>
+      <label>Select a topic to see related posts:</label>
+      <ul class="tags">
+        {{repeat tags}}<li><a href="{{link}}">{{name}}</a></li>{{end}}
+        <p><em>Or check out <a href="/">other posts I've written</a>.</em></p>
+      </ul>
   </footer>
 </article>
-
-<p><em>Want to learn more? Check out <a href="/">other posts I've written</a>.</em></p>

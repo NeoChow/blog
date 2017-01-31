@@ -15,11 +15,6 @@ article ul.tags {
     text-align:center;
 }
 
-article footer ul.tags {
-    border-top:thin solid #004581;
-    padding-top:0.5em;
-}
-
 article h2 a {
   text-decoration:none;
   color:inherit;
@@ -68,6 +63,15 @@ article footer {
 
 article footer p {
   margin-bottom:0;
+}
+
+article footer label {
+  width:100%;
+  border-top:thin solid #004581;
+  padding-top:0.5em;
+  margin-top:0.25em;
+  display:block;
+  text-align:center;
 }
 
 article blockquote {

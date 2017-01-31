@@ -108,10 +108,9 @@ a:hover {
 
 #footer a {
   color:inherit;
-  padding:10px;
-  padding-bottom:20px;
+  padding:1em;
   text-decoration:none;
-  line-height:2em;
+  line-height:1em;
   display:inline-block;
 }
 
@@ -180,8 +179,6 @@ ul.tags {
 
 ul.tags li {
     display:inline-block;
-    background-color:#dde8f0;
-    border-radius:.25em;
     margin:0;
     margin-right:.5em;
     margin-bottom:0;
@@ -191,6 +188,8 @@ ul.tags li a {
     margin:0;
     padding:.25em;
     display:block;
+    background-color:#dde8f0;
+    border-radius:.25em;
 }
 
 #content article ul.tags li {
@@ -212,7 +211,6 @@ ul.tags li a {
   body, html {
     font-size:11pt;
   }
-
 }
 
 @media all and (max-width:400px) {
